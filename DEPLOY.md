@@ -63,3 +63,34 @@ generated from `index.html`. After changing the header or footer in `index.html`
 ```bash
 python3 deploy/build-layout.py .
 ```
+
+## 5. CMS (Admin → Content / Website)
+
+Everything on the site is managed from `/admin/`:
+
+| Section | What it does | Permission |
+| --- | --- | --- |
+| Blog Posts / News | Write, schedule, publish posts (`/blog/<slug>`, `/news/<slug>`). Writers send drafts for review. | `posts.write`, `posts.publish` |
+| Categories | Blog/news topics (`/blog/category/<slug>`) | `posts.categories` |
+| Media Library | Image uploads (`/uploads/`, images only, >2000px scaled down) | `media.manage` |
+| Pages | Visual editor + HTML editor for every designed page, hide pages, new CMS pages, revisions | `pages.edit` |
+| Header & Footer | One shared header/footer for every page | `pages.edit` |
+| SEO (per page), Redirects | Titles, descriptions, share images, noindex, 301 redirects | `seo.manage` |
+| Markets | Hide / pin / rename markets, platforms on/off, refresh now | `markets.manage` |
+| Site Settings | Announcement bar, social links, analytics/tracking code, blog & markets texts | `settings.manage` |
+
+Only a **Super Admin** creates admins (Admins) and roles (Roles & Permissions). Ready-made roles:
+*Content Editor*, *Writer*, *Website Manager* (plus Manager / Support / Viewer for users).
+
+How it is wired:
+
+- `page.php` serves every designed `.html` page and CMS page: CMS redirects → hidden pages → CMS pages → the
+  (CMS-edited copy of the) `.html` file, with the shared header/footer, SEO tags and announcement bar applied.
+- The public site reads only files in `app/cache/cms/` (written by `cms_publish_cache()` in `app/cms.php` on every
+  save), so pages keep working even if MySQL is down. Blog/news pages read MySQL.
+- Visual editor: `admin/page-edit.php` → iframe `admin/page-render.php` → `admin/page-save.php`; engine in
+  `ve_*()` in `app/cms.php`. Edits are applied to the original HTML at exact positions; every save keeps a revision.
+- Default header/footer: `includes/site-header.html` / `site-footer.html` (built from `index.html` by
+  `deploy/build-layout.py`). Edited copies win.
+- After `git pull`, run `php app/cron/migrate.php` (deploy.sh does it) to create new tables.
+- Local test server with the same URL rules as nginx: `php -S 127.0.0.1:8080 deploy/router.php`.

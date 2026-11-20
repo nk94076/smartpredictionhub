@@ -8,7 +8,7 @@ require_once __DIR__ . '/permissions.php';
 require_once __DIR__ . '/icons.php';
 
 /* ---------------- Headers ---------------- */
-send_security_headers("default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; form-action 'self'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'");
+send_security_headers("default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com; form-action 'self'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'");
 header('X-Robots-Tag: noindex, nofollow, noarchive');
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Pragma: no-cache');

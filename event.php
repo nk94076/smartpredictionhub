@@ -2,13 +2,14 @@
 /** One event: consensus, 30-day chart and side-by-side prices on every platform. */
 define('SPH_APP', true);
 if (is_file(__DIR__ . '/app/config.php')) require_once __DIR__ . '/app/config.php';
-require_once __DIR__ . '/app/markets/config.php';
+require_once __DIR__ . '/app/markets/store.php';
 
 $id = (string)($_GET['id'] ?? '');
 $event = null;
 if (preg_match('/^[a-z0-9-]{1,200}$/', $id)) {
     $file = MK_CACHE_DIR . '/events/' . $id . '.json';
     if (is_file($file)) $event = json_decode((string)file_get_contents($file), true);
+    if ($event) $event = mk_override($event);
 }
 if (!$event) {
     http_response_code(404);

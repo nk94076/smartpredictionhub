@@ -3,6 +3,7 @@
 if (!defined('SPH_APP')) { http_response_code(403); exit('Forbidden'); }
 
 require_once __DIR__ . '/config.php';
+require_once dirname(__DIR__) . '/site.php';
 
 function mk_load(): ?array
 {
@@ -11,7 +12,27 @@ function mk_load(): ?array
     $file = MK_CACHE_DIR . '/markets.json';
     if (!is_file($file)) return null;
     $data = json_decode((string)file_get_contents($file), true);
-    return is_array($data) ? $data : null;
+    if (!is_array($data)) return $data = null;
+    $events = [];
+    foreach ($data['events'] as $e) {
+        if (($e = mk_override($e)) !== null) $events[] = $e;
+    }
+    $data['events'] = $events;
+    return $data;
+}
+
+/** Apply Admin -> Markets changes (hide / pin / rename / recategorise, platforms switched off). Null = hidden. */
+function mk_override(array $e): ?array
+{
+    $o = sph_market_overrides();
+    $id = $e['id'];
+    if (isset($o['hidden'][$id])) return null;
+    foreach ($o['disabled_platforms'] as $p) unset($e['platforms'][$p]);
+    if (!$e['platforms']) return null;
+    if (isset($o['titles'][$id])) $e['title'] = $o['titles'][$id];
+    if (isset($o['categories'][$id])) $e['category'] = $o['categories'][$id];
+    $e['pinned'] = isset($o['pinned'][$id]);
+    return $e;
 }
 
 function mk_cache_age(): ?int
@@ -85,6 +106,9 @@ function mk_query(array $events, array $q): array
         'platforms' => fn($e) => count($e['platforms']) * 1e15 + $e['volume'],
     ][$sort] ?? fn($e) => $e['volume'];
     usort($events, fn($a, $b) => $dir * ($key($a) <=> $key($b)));
+    if (!isset($q['sort'])) { // pinned markets first on the default order
+        usort($events, fn($a, $b) => (int)!empty($b['pinned']) <=> (int)!empty($a['pinned']));
+    }
 
     $per = max(1, min(100, (int)($q['per'] ?? 50)));
     $page = max(1, (int)($q['page'] ?? 1));

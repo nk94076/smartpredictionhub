@@ -12,6 +12,7 @@ if (!preg_match('/^[a-z0-9-]{1,200}$/', $id)) {
 }
 $file = MK_CACHE_DIR . '/events/' . $id . '.json';
 $event = is_file($file) ? json_decode((string)file_get_contents($file), true) : null;
+if ($event) $event = mk_override($event);
 if (!$event) {
     http_response_code(404);
     mk_json_out(['error' => 'Event not found'], 30);

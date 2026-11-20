@@ -153,6 +153,104 @@ function run_migrations(): array
             city VARCHAR(80) NULL,
             fetched_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
         ) $E",
+
+        // ---------- CMS ----------
+        'cms_categories' => "CREATE TABLE IF NOT EXISTS cms_categories (
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            type ENUM('blog','news') NOT NULL DEFAULT 'blog',
+            name VARCHAR(100) NOT NULL,
+            slug VARCHAR(120) NOT NULL,
+            description VARCHAR(500) NULL,
+            sort_order INT NOT NULL DEFAULT 0,
+            UNIQUE KEY uq_type_slug (type, slug)
+        ) $E",
+        'cms_posts' => "CREATE TABLE IF NOT EXISTS cms_posts (
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            type ENUM('blog','news') NOT NULL DEFAULT 'blog',
+            title VARCHAR(255) NOT NULL,
+            slug VARCHAR(200) NOT NULL,
+            excerpt TEXT NULL,
+            content MEDIUMTEXT NULL,
+            cover_image VARCHAR(500) NULL,
+            cover_alt VARCHAR(255) NULL,
+            category_id INT UNSIGNED NULL,
+            tags VARCHAR(500) NULL,
+            author_id INT UNSIGNED NULL,
+            author_name VARCHAR(100) NULL,
+            status ENUM('draft','pending','published') NOT NULL DEFAULT 'draft',
+            featured TINYINT(1) NOT NULL DEFAULT 0,
+            meta_title VARCHAR(255) NULL,
+            meta_description VARCHAR(500) NULL,
+            read_minutes SMALLINT UNSIGNED NOT NULL DEFAULT 1,
+            views INT UNSIGNED NOT NULL DEFAULT 0,
+            published_at DATETIME NULL,
+            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            updated_by INT UNSIGNED NULL,
+            UNIQUE KEY uq_type_slug (type, slug),
+            INDEX idx_list (type, status, published_at),
+            INDEX idx_cat (category_id)
+        ) $E",
+        'cms_pages' => "CREATE TABLE IF NOT EXISTS cms_pages (
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            path VARCHAR(190) NOT NULL UNIQUE,
+            kind ENUM('static','custom','dynamic') NOT NULL DEFAULT 'custom',
+            title VARCHAR(255) NULL,
+            content MEDIUMTEXT NULL,
+            status ENUM('published','draft','hidden') NOT NULL DEFAULT 'published',
+            use_chrome TINYINT(1) NOT NULL DEFAULT 1,
+            meta_title VARCHAR(255) NULL,
+            meta_description VARCHAR(500) NULL,
+            og_image VARCHAR(500) NULL,
+            noindex TINYINT(1) NOT NULL DEFAULT 0,
+            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            updated_by INT UNSIGNED NULL
+        ) $E",
+        'cms_revisions' => "CREATE TABLE IF NOT EXISTS cms_revisions (
+            id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            entity VARCHAR(20) NOT NULL,
+            entity_id VARCHAR(190) NOT NULL,
+            title VARCHAR(255) NULL,
+            content MEDIUMTEXT NULL,
+            admin_id INT UNSIGNED NULL,
+            admin_username VARCHAR(50) NULL,
+            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_entity (entity, entity_id, id)
+        ) $E",
+        'cms_media' => "CREATE TABLE IF NOT EXISTS cms_media (
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            path VARCHAR(255) NOT NULL,
+            original_name VARCHAR(255) NULL,
+            mime VARCHAR(60) NOT NULL,
+            size INT UNSIGNED NOT NULL DEFAULT 0,
+            width INT UNSIGNED NULL,
+            height INT UNSIGNED NULL,
+            alt VARCHAR(255) NULL,
+            uploaded_by INT UNSIGNED NULL,
+            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ) $E",
+        'cms_settings' => "CREATE TABLE IF NOT EXISTS cms_settings (
+            k VARCHAR(80) NOT NULL PRIMARY KEY,
+            v MEDIUMTEXT NULL,
+            updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        ) $E",
+        'cms_redirects' => "CREATE TABLE IF NOT EXISTS cms_redirects (
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            from_path VARCHAR(190) NOT NULL UNIQUE,
+            to_url VARCHAR(500) NOT NULL,
+            code SMALLINT UNSIGNED NOT NULL DEFAULT 301,
+            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ) $E",
+        'cms_market_overrides' => "CREATE TABLE IF NOT EXISTS cms_market_overrides (
+            event_id VARCHAR(200) NOT NULL PRIMARY KEY,
+            hidden TINYINT(1) NOT NULL DEFAULT 0,
+            pinned TINYINT(1) NOT NULL DEFAULT 0,
+            title VARCHAR(255) NULL,
+            category VARCHAR(40) NULL,
+            updated_by INT UNSIGNED NULL,
+            updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        ) $E",
     ];
 
     foreach ($tables as $name => $sql) {
@@ -212,6 +310,10 @@ function run_migrations(): array
             $log[] = "Existing admin '{$first['username']}' promoted to Super Admin";
         }
     }
+
+    // CMS: default roles, categories, first article, cache files (each step runs once)
+    require_once __DIR__ . '/cms.php';
+    $log = array_merge($log, cms_seed());
 
     return $log;
 }

@@ -77,18 +77,34 @@ while '</script>' not in lines[header_end]:
 foot_s = find('<footer class="foot">')
 foot_e = find('</footer>', foot_s)
 
+menu_s = find('<aside id="mobileMenu"', body)
+menu_e = find('</aside>', menu_s)
+
 head = '\n'.join(lines[:style_end + 1])
-head = re.sub(r'<title>.*?</title>', '<title><?= htmlspecialchars($pageTitle ?? "Smart Prediction Hub", ENT_QUOTES) ?></title>\n'
-              '    <meta name="description" content="<?= htmlspecialchars($pageDescription ?? "", ENT_QUOTES) ?>">\n'
+head = re.sub(r'<title>.*?</title>', '<title><?= htmlspecialchars($pageTitle, ENT_QUOTES) ?></title>\n'
+              '    <meta name="description" content="<?= htmlspecialchars($pageDescription, ENT_QUOTES) ?>">\n'
               '    <?php if (!empty($canonical)): ?><link rel="canonical" href="<?= htmlspecialchars($canonical, ENT_QUOTES) ?>"><?php endif; ?>', head, count=1)
+# The header (top bar + nav + mobile menu) and footer are CMS-editable: defaults live in includes/site-*.html,
+# edited copies in app/cache/cms/ (Admin -> Header & Footer). See app/site.php.
+site_header = '\n'.join(lines[body + 1:menu_e + 1]) + '\n'
+site_footer = '\n'.join(lines[foot_s:foot_e + 1]) + '\n'
 top = ("<?php if (!defined('SPH_APP')) { http_response_code(404); exit; } ?>\n"
-       '<?php /* Shared page top, generated from index.html by deploy/build-layout.py — edit index.html, then re-run. */ ?>\n'
-       + head + '\n    <link rel="stylesheet" href="/assets/markets.css?v=<?= @filemtime(__DIR__ . "/../assets/markets.css") ?>">\n</head>\n'
-       + '\n'.join(lines[body:header_end + 1]) + '\n')
+       '<?php /* Shared page top, generated from index.html by deploy/build-layout.py — edit index.html, then re-run. */\n'
+       "require_once __DIR__ . '/../app/site.php';\n"
+       "$pageTitle = $pageTitle ?? 'Smart Prediction Hub';\n"
+       "$pageDescription = $pageDescription ?? '';\n"
+       "$sphHead = sph_seo(sph_current_path(), $pageTitle, $pageDescription, $ogImage ?? ''); ?>\n"
+       + head + '\n    <link rel="stylesheet" href="/assets/markets.css?v=<?= @filemtime(__DIR__ . "/../assets/markets.css") ?>">\n'
+       + '<?= $extraHead ?? \'\' ?>\n    <?= $sphHead ?>\n</head>\n'
+       + lines[body] + '\n<?= sph_body_start() ?>\n<?= sph_chrome(\'header\') ?>\n'
+       + '\n'.join(lines[menu_e + 1:header_end + 1]) + '\n')
 bottom = ("<?php if (!defined('SPH_APP')) { http_response_code(404); exit; } ?>\n"
           '<?php /* Shared page bottom, generated from index.html by deploy/build-layout.py. */ ?>\n'
-          + '\n'.join(lines[foot_s:foot_e + 1])
-          + '\n    <script src="/assets/markets.js?v=<?= @filemtime(__DIR__ . "/../assets/markets.js") ?>" defer></script>\n</body>\n</html>\n')
+          + "<?= sph_chrome('footer') ?>\n"
+          + '    <script src="/assets/markets.js?v=<?= @filemtime(__DIR__ . "/../assets/markets.js") ?>" defer></script>\n'
+          + "<?= $extraScripts ?? '' ?>\n<?= sph_body_end() ?>\n</body>\n</html>\n")
+open(f'{root}/includes/site-header.html', 'w', encoding='utf-8').write(site_header)
+open(f'{root}/includes/site-footer.html', 'w', encoding='utf-8').write(site_footer)
 open(f'{root}/includes/layout-top.php', 'w', encoding='utf-8').write(top)
 open(f'{root}/includes/layout-bottom.php', 'w', encoding='utf-8').write(bottom)
 

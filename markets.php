@@ -3,6 +3,7 @@
 define('SPH_APP', true);
 if (is_file(__DIR__ . '/app/config.php')) require_once __DIR__ . '/app/config.php';
 require_once __DIR__ . '/app/markets/config.php';
+require_once __DIR__ . '/app/site.php';
 
 $cat = (string)($_GET['category'] ?? '');
 $catLabel = MK_CATEGORIES[$cat] ?? null;
@@ -21,9 +22,17 @@ require __DIR__ . '/includes/layout-top.php';
 <section class="mk-hero">
     <div class="mk-wrap">
         <div class="mk-crumbs"><a href="/">Home</a> / <a href="/markets">Markets</a><?= $catLabel ? ' / ' . htmlspecialchars($catLabel) : '' ?></div>
+        <?php if (!$catLabel && !$tabLabel && sph_setting('markets_heading') !== ''): ?>
+        <h1><?= htmlspecialchars(sph_setting('markets_heading')) ?></h1>
+        <?php else: ?>
         <h1><?= htmlspecialchars($heading) ?> <span>across every platform</span></h1>
+        <?php endif; ?>
+        <?php if (sph_setting('markets_intro') !== ''): ?>
+        <p><?= nl2br(htmlspecialchars(sph_setting('markets_intro'))) ?></p>
+        <?php else: ?>
         <p>See what prediction markets are pricing and why. Compare odds, liquidity and price moves across Polymarket, Kalshi,
             Limitless and PredictIt — normalized in one place, with a volume-weighted consensus and the best price for every outcome.</p>
+        <?php endif; ?>
     </div>
 </section>
 <main class="mk-page">

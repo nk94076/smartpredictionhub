@@ -8,3 +8,4 @@ app/sessions/*
 cache/
 app/cache/
 __pycache__/
+uploads/

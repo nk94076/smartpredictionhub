@@ -5,6 +5,18 @@
  * Note: only a Super Admin can manage admins and roles.
  */
 const PERMISSIONS = [
+    'Blog & News' => [
+        'posts.write'       => ['Write posts', 'Create blog/news posts and edit their own drafts (sent for review)'],
+        'posts.publish'     => ['Publish posts', 'Publish, unpublish and delete any post, and edit everyone\'s posts'],
+        'posts.categories'  => ['Manage categories', 'Create, rename and delete blog/news categories'],
+        'media.manage'      => ['Media library', 'Upload and delete images'],
+    ],
+    'Website' => [
+        'pages.edit'        => ['Edit pages', 'Edit page content, header & footer, create pages (full HTML — give only to trusted admins)'],
+        'seo.manage'        => ['SEO & redirects', 'Edit page titles/descriptions and manage URL redirects'],
+        'settings.manage'   => ['Site settings', 'Announcement bar, social links, tracking scripts and other site-wide settings'],
+        'markets.manage'    => ['Manage markets', 'Hide, pin or rename live markets, turn platforms on/off and refresh data'],
+    ],
     'Users' => [
         'users.view'        => ['View users', 'View the user list and full profiles'],
         'users.edit'        => ['Manage users', 'Block / unblock users and force sign-out'],

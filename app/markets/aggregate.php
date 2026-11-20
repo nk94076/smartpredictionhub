@@ -380,7 +380,10 @@ function mk_refresh(bool $verbose = false): array
 
     $all = [];
     $counts = [];
+    require_once dirname(__DIR__) . '/site.php';
+    $off = sph_market_overrides()['disabled_platforms'];
     foreach (['polymarket', 'kalshi', 'limitless', 'predictit'] as $p) {
+        if (in_array($p, $off, true)) { $log("$p: switched off in admin"); continue; }
         try {
             $list = ('mk_fetch_' . $p)();
         } catch (Throwable $ex) {
