@@ -1,0 +1,1495 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How Prediction Markets Work — Smart Prediction Hub</title>
+<meta name="description" content="A beginner-friendly guide to prediction markets, event contracts, Yes and No prices, settlement, fees and liquidity.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{primary:'#4F46E5',secondary:'#7C3AED',accent:'#F59E0B',success:'#10B981'},fontFamily:{sans:['Poppins','sans-serif'],display:['Space Grotesk','sans-serif']}}}}
+</script>
+<style>
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#F8F7FC;color:#17142E;font-family:"Poppins",sans-serif}
+h1,h2,h3,h4,h5,h6{font-family:"Space Grotesk",sans-serif}
+a{text-decoration:none}
+img{max-width:100%;display:block}
+.scrollbar-hide::-webkit-scrollbar{display:none}
+.scrollbar-hide{-ms-overflow-style:none;scrollbar-width:none}
+::selection{background:#4F46E5;color:#fff}
+
+/* Supplied header: only the CSS it actually needs */
+#siteHeader{transition:transform .35s ease,background .35s ease,box-shadow .35s ease;will-change:transform}
+.logo-icon{transition:.3s}
+.logo-icon:hover{transform:rotate(-5deg) scale(1.04);box-shadow:0 14px 32px rgba(79,70,229,.35)}
+.sph-wordmark-logo{text-decoration:none}
+.sph-wordmark-icon i{font-size:20px;line-height:1}
+.sph-wordmark-copy h2{margin:0;color:#fff;font-size:24px;line-height:1;font-weight:900;letter-spacing:-.025em;text-transform:uppercase}
+.sph-wordmark-copy>div{margin-top:4px;color:#D6D3F2;font-size:12px;line-height:1.1;font-weight:600;letter-spacing:.025em;text-transform:uppercase}
+nav ul li{position:relative}
+.group>.absolute{transform-origin:top center;transition:opacity .25s ease,transform .25s ease,visibility .25s}
+.group .absolute a{transition:.2s}
+.group .absolute a:hover{transform:translateX(4px)}
+.search-btn,.primary-btn{transition:.3s}
+.search-btn:hover{border-color:#4F46E5;color:#4F46E5;transform:translateY(-2px)}
+.primary-btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(79,70,229,.32)}
+.mobile-trigger,.mobile-content a{transition:.22s}
+.mobile-trigger:hover{background:#171437}
+.mobile-content a:hover{color:#4F46E5;transform:translateX(5px)}
+#mobileOverlay{transition:.35s;backdrop-filter:blur(5px)}
+.rotate-180{transform:rotate(180deg)}
+.top-market-bar,.top-market-bar .text-\[15px\]{font-size:12px!important}
+#siteHeader a,#siteHeader button,#siteHeader span{font-size:12px}
+#siteHeader .text-xs{font-size:10px!important}
+#siteHeader .text-sm{font-size:11px!important}
+#siteHeader .text-lg{font-size:14px!important}
+
+/* Shared page shell */
+.page-wrap{max-width:1280px;margin:auto;padding-left:24px;padding-right:24px}
+.page-kicker{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:999px;background:#EEEAFE;color:#5B4BFF;font-size:10px;font-weight:700;letter-spacing:.11em;text-transform:uppercase}
+.page-title{margin:14px 0 13px;color:#15132D;font-size:clamp(38px,5vw,60px);line-height:1.02;letter-spacing:-.045em}
+.page-lede{max-width:760px;margin:0;color:#716A81;font-size:15px;line-height:1.8}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:24px}
+.section-head h2{margin:0 0 7px;color:#17142E;font-size:29px;letter-spacing:-.035em}
+.section-head p{max-width:650px;margin:0;color:#756E84;font-size:12px;line-height:1.7}
+.section-link{color:#5547F5;font-size:11px;font-weight:700}
+.card{border:1px solid #E6E1F5;border-radius:18px;background:#fff;box-shadow:0 8px 26px rgba(31,24,65,.045)}
+
+/* Footer from supplied page */
+.foot{background:#120E1F;color:#D3CBE3;padding:42px 24px 0;font:12px/1.7 Poppins,Arial,sans-serif}
+.foot .wrap{max-width:1392px;margin:auto}
+.footer-grid{display:grid;grid-template-columns:1.45fr 1fr 1.05fr .9fr 1fr;gap:28px}
+.foot h4{font-size:12px;color:#fff;font-weight:700;margin:0 0 14px}
+.foot p{margin:0 0 12px}
+.foot a{display:block;margin:6px 0;color:#D3CBE3;transition:.2s}
+.foot a:hover{color:#A78BFA}
+.foot-tags{display:block}
+.foot-tags a{border:0;padding:0;color:#D3CBE3;font-size:12px}
+.foot-bottom{display:flex;justify-content:space-between;gap:20px;border-top:1px solid #332842;padding:18px 0;margin-top:30px;font-size:10px;color:#AA9DC0}
+
+/* Newsletter strip used on both new pages */
+.stay-informed-section{padding:0 24px 42px;background:#F8F7FC}
+.stay-informed-inner{max-width:1180px;margin:auto;padding:32px 36px;border-radius:18px;background:linear-gradient(115deg,#17122E 0%,#211849 52%,#30205B 100%);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:34px;box-shadow:0 18px 45px rgba(27,20,56,.13)}
+.stay-informed-copy{max-width:600px}
+.stay-kicker{display:inline-block;margin-bottom:9px;color:#C4B5FD;font-size:10px;font-weight:700;letter-spacing:.13em}
+.stay-informed-copy h2{margin:0 0 8px;color:#fff;font-size:27px}
+.stay-informed-copy p{margin:0;color:#D1CCE5;font-size:12px;line-height:1.7}
+.stay-email-form{width:min(430px,100%)}
+.stay-email-box{display:flex;align-items:center;gap:10px;padding:6px;border:1px solid rgba(255,255,255,.13);border-radius:11px;background:rgba(255,255,255,.07)}
+.stay-email-box>i{margin-left:9px;color:#C4B5FD}
+.stay-email-box input{flex:1;min-width:0;height:40px;border:0;outline:0;background:transparent;color:#fff;font:11px Poppins}
+.stay-email-box input::placeholder{color:#AAA3C0}
+.stay-email-box button{height:40px;padding:0 15px;border:0;border-radius:8px;background:linear-gradient(135deg,#6D5DFB,#7C3AED);color:#fff;font:600 10px Poppins;cursor:pointer}
+.stay-email-form small{display:block;margin-top:7px;color:#9F98BB;font-size:8px}
+
+@media(max-width:1100px){
+  .footer-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:750px){
+  .page-wrap{padding-left:16px;padding-right:16px}
+  .top-market-bar .text-\[15px\]{font-size:11px!important}
+  #siteHeader a,#siteHeader button,#siteHeader span{font-size:11px}
+  .section-head{align-items:flex-start;flex-direction:column;gap:9px}
+  .stay-informed-section{padding:0 16px 30px}
+  .stay-informed-inner{padding:26px 21px;flex-direction:column;align-items:flex-start}
+  .footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+  .foot-bottom{flex-wrap:wrap}
+}
+@media(max-width:480px){
+  .footer-grid{grid-template-columns:1fr}
+  .stay-email-box{flex-wrap:wrap}
+  .stay-email-box button{width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+
+.post-hero{padding:55px 0 45px;background:
+radial-gradient(circle at 84% 16%,rgba(124,58,237,.20),transparent 27%),
+#0B0920;color:#fff}
+.post-breadcrumbs{display:flex;gap:8px;flex-wrap:wrap;color:#928AAE;font-size:10px}
+.post-breadcrumbs a{color:#C4B5FD}
+.post-hero h1{max-width:950px;margin:20px 0 15px;color:#fff;font-size:clamp(38px,5.3vw,64px);line-height:1.06;letter-spacing:-.05em}
+.post-hero .intro{max-width:810px;margin:0;color:#C9C4DD;font-size:15px;line-height:1.8}
+.post-byline{display:flex;align-items:center;gap:14px;margin-top:26px;color:#AFA8C5;font-size:10px}
+.author-avatar{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,#6D5DFB,#8B5CF6);color:#fff;font-weight:800}
+.post-byline strong{display:block;color:#fff;font-size:11px}.post-byline span{display:block;margin-top:2px}
+.hero-visual{max-width:1280px;margin:0 auto;padding:0 24px;transform:translateY(34px)}
+.hero-visual-inner{min-height:390px;overflow:hidden;border:1px solid #332A57;border-radius:21px;position:relative;background:
+radial-gradient(circle at 80% 18%,rgba(245,158,11,.22),transparent 24%),
+linear-gradient(135deg,#17142E,#30205B);box-shadow:0 30px 70px rgba(20,14,47,.22)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:38px 38px}
+.visual-copy{position:absolute;left:8%;top:18%;max-width:470px;color:#fff}
+.visual-copy small{color:#C4B5FD;font-size:9px;letter-spacing:.13em}
+.visual-copy h2{margin:11px 0 10px;font-size:34px;line-height:1.16}.visual-copy p{margin:0;color:#C8C2DD;font-size:11px;line-height:1.7}
+.visual-market{position:absolute;right:7%;bottom:13%;width:330px;padding:21px;border:1px solid rgba(255,255,255,.11);border-radius:17px;background:rgba(255,255,255,.065);backdrop-filter:blur(12px);color:#fff}
+.visual-market small{color:#AFA8C6;font-size:9px}.visual-market b{display:block;margin:7px 0 16px;font-size:15px}
+.visual-prices{display:grid;grid-template-columns:1fr 1fr;gap:9px}.visual-prices span{padding:11px;border-radius:9px;text-align:center;font-size:10px;font-weight:700}.visual-prices span:first-child{background:rgba(16,185,129,.14);color:#6EE7B7}.visual-prices span:last-child{background:rgba(239,68,68,.13);color:#FCA5A5}
+.article-shell{padding-top:83px;padding-bottom:68px}
+.article-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:34px;align-items:start}
+.article-card{padding:36px 38px}
+.article-card .lead{font-size:17px;line-height:1.9;color:#443E53}
+.article-card h2{margin:34px 0 13px;color:#17142E;font-size:28px;letter-spacing:-.035em;scroll-margin-top:100px}
+.article-card h3{margin:26px 0 10px;color:#17142E;font-size:20px}
+.article-card p,.article-card li{color:#5F586E;font-size:14px;line-height:1.9}
+.article-card ul{padding-left:21px}.article-card li{margin:7px 0}
+.key-takeaways{margin:28px 0;padding:22px;border:1px solid #DDD6FE;border-radius:14px;background:#F8F6FF}
+.key-takeaways strong{display:block;margin-bottom:9px;color:#5547F5;font-size:12px}
+.key-takeaways ul{margin:0;padding-left:18px}
+.example-box{margin:25px 0;padding:22px;border-radius:14px;background:#17142E;color:#fff}
+.example-box h3{margin-top:0;color:#fff}.example-box p{color:#D2CCE4}
+.article-note{margin:24px 0;padding:18px 20px;border-left:3px solid #7C3AED;background:#F7F6FF;color:#625B71;font-size:12px;line-height:1.8}
+.toc-card{position:sticky;top:98px;padding:21px}
+.toc-card h3{margin:0 0 12px;color:#17142E;font-size:16px}
+.toc-card a{display:block;padding:9px 0;border-bottom:1px solid #EEEAF6;color:#625B71;font-size:10px}.toc-card a:last-child{border-bottom:0}
+.share-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.share-row a{width:34px;height:34px;display:grid;place-items:center;border:1px solid #E5DFF1;border-radius:9px;color:#5547F5;background:#fff}
+.author-box{margin-top:18px;padding:20px;display:flex;align-items:flex-start;gap:14px}.author-box .author-avatar{flex:0 0 44px;width:44px;height:44px}.author-box h3{margin:0 0 6px;font-size:15px}.author-box p{margin:0;color:#746D84;font-size:10px;line-height:1.7}
+.related-section{padding:62px 0;background:#fff;border-top:1px solid #ECE8F5}
+.related-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.related-card{padding:22px;transition:.25s}.related-card:hover{transform:translateY(-4px);box-shadow:0 15px 34px rgba(31,24,65,.08)}
+.related-card .icon{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:#F1EDFF;color:#654FF1}.related-card small{display:block;margin-top:17px;color:#8C859D;font-size:8px}.related-card h3{margin:7px 0 8px;color:#17142E;font-size:17px;line-height:1.4}.related-card p{margin:0 0 15px;color:#716A80;font-size:10px;line-height:1.7}
+@media(max-width:900px){
+  .article-layout{grid-template-columns:1fr}
+  .toc-card{position:static}
+  .hero-visual-inner{min-height:420px}
+  .visual-market{left:8%;right:auto;bottom:8%;width:84%}
+}
+@media(max-width:650px){
+  .post-hero{padding:42px 0 34px}
+  .hero-visual{padding:0 16px}
+  .hero-visual-inner{min-height:430px}
+  .visual-copy{left:7%;right:7%;top:11%}
+  .visual-copy h2{font-size:27px}
+  .article-shell{padding-top:65px}
+  .article-card{padding:26px 20px}
+  .related-grid{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+<body>
+<!-- Top Market Bar -->
+    <div class="top-market-bar bg-[#09091A] border-b border-[#1D1B35] text-white">
+        <div class="max-w-[1600px] mx-auto px-4 lg:px-6">
+
+            <div class="flex items-center justify-between h-12 gap-6">
+
+                <!-- Left Ticker -->
+                <div class="flex items-center gap-8 overflow-x-auto whitespace-nowrap scrollbar-hide flex-1">
+
+                    <!-- Item -->
+                    <div class="flex items-center gap-2 shrink-0">
+                        <div class="w-7 h-7 rounded-full bg-[#A855F7]/15 flex items-center justify-center">
+                            <i class="fa-solid fa-sliders text-[#C084FC] text-xs"></i>
+                        </div>
+
+                        <span class="text-gray-300 font-medium text-[15px]">
+                            Market Pulse:
+                        </span>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="flex items-center gap-2 shrink-0">
+                        <div class="w-7 h-7 rounded-full bg-emerald-500/15 flex items-center justify-center">
+                            <i class="fa-solid fa-chart-column text-emerald-400 text-xs"></i>
+                        </div>
+
+                        <span class="text-gray-100 text-[15px]">
+                            Politics
+                            <span class="text-emerald-400 font-semibold">
+                                +18%
+                            </span>
+                            <i class="fa-solid fa-arrow-trend-up text-emerald-400 text-xs ml-1"></i>
+                        </span>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="flex items-center gap-2 shrink-0">
+                        <div class="w-7 h-7 rounded-full bg-emerald-500/15 flex items-center justify-center">
+                            <i class="fa-solid fa-futbol text-emerald-400 text-xs"></i>
+                        </div>
+
+                        <span class="text-gray-100 text-[15px]">
+                            Sports
+                            <span class="text-emerald-400 font-semibold">
+                                +9%
+                            </span>
+                            <i class="fa-solid fa-arrow-trend-up text-emerald-400 text-xs ml-1"></i>
+                        </span>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="flex items-center gap-2 shrink-0">
+                        <div class="w-7 h-7 rounded-full bg-amber-500/15 flex items-center justify-center">
+                            <i class="fa-solid fa-star text-amber-400 text-xs"></i>
+                        </div>
+
+                        <span class="text-gray-100 text-[15px]">
+                            Kalshi leads US volume
+                        </span>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="flex items-center gap-2 shrink-0">
+                        <div class="w-7 h-7 rounded-full bg-emerald-500/15 flex items-center justify-center">
+                            <i class="fa-brands fa-bitcoin text-emerald-400 text-xs"></i>
+                        </div>
+
+                        <span class="text-gray-100 text-[15px]">
+                            Crypto markets gaining
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- Right -->
+                <div class="hidden xl:flex items-center gap-8 shrink-0">
+
+                    <div class="text-gray-300 text-[15px]">
+                        Data updated
+                        <span class="font-semibold text-white">
+                            8 min ago
+                        </span>
+                    </div>
+
+                    <button class="flex items-center gap-2 text-[15px] hover:text-primary transition">
+
+                        <i class="fa-solid fa-location-dot text-[#C084FC]"></i>
+
+                        <span>New York, USA</span>
+
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Bottom Purple Line -->
+        <div class="h-[2px] bg-primary"></div>
+
+    </div>
+
+    <header id="siteHeader"
+        class="sticky top-0 z-50 bg-[#0B0920] border-b border-[#1D1B35] transition-all duration-300">
+
+        <div class="max-w-[1600px] mx-auto">
+
+            <div class="px-4 lg:px-6 py-3">
+
+                <div class="flex items-center justify-between h-18">
+
+                    <!-- ========================= -->
+                    <!-- LOGO -->
+                    <!-- ========================= -->
+
+                    <a href="home.html" class="sph-wordmark-logo flex items-center gap-4 shrink-0"
+                        aria-label="Smart Prediction Hub home">
+
+                        <!-- Logo Icon -->
+                        <div
+                            class="logo-icon sph-wordmark-icon w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/20">
+                            <i class="fa-solid fa-chart-column text-white"></i>
+                        </div>
+
+                        <!-- Logo Text -->
+                        <div class="sph-wordmark-copy">
+                            <h2>SMART</h2>
+                            <div>Prediction Hub</div>
+                        </div>
+
+                    </a>
+
+                    <!-- ========================= -->
+                    <!-- Desktop Navigation -->
+                    <!-- ========================= -->
+
+                    <nav class="hidden xl:flex items-center">
+
+                        <ul class="flex items-center gap-6">
+
+                            <!-- Markets -->
+
+                            <li class="relative group">
+
+                                <button
+                                    class="flex items-center gap-2 h-18 text-white font-medium hover:text-primary transition">
+
+                                    Markets
+
+                                    <i
+                                        class="fa-solid fa-chevron-down text-[10px] transition duration-300 group-hover:rotate-180"></i>
+
+                                </button>
+
+                                <!-- Dropdown -->
+
+                                <div
+                                    class="absolute left-0 top-full w-[340px] opacity-0 invisible translate-y-4 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
+
+                                    <div class="rounded-2xl bg-[#131029] border border-[#272245] shadow-2xl p-3">
+
+                                        <a href="/coming-soon.html"
+                                            class="flex items-start gap-4 p-4 rounded-xl hover:bg-primary/10 transition">
+
+                                            <i class="fa-solid fa-chart-line text-primary text-xl mt-1"></i>
+
+                                            <div>
+
+                                                <h4 class="text-white font-semibold">
+                                                    Political Markets
+                                                </h4>
+
+                                                <p class="text-[#9A94BE] text-sm">
+                                                    Election & government predictions
+                                                </p>
+
+                                            </div>
+
+                                        </a>
+
+                                        <a href="/coming-soon.html"
+                                            class="flex items-start gap-4 p-4 rounded-xl hover:bg-primary/10 transition">
+
+                                            <i class="fa-solid fa-futbol text-success text-xl mt-1"></i>
+
+                                            <div>
+
+                                                <h4 class="text-white font-semibold">
+                                                    Sports Markets
+                                                </h4>
+
+                                                <p class="text-[#9A94BE] text-sm">
+                                                    Football, Cricket, Tennis & more
+                                                </p>
+
+                                            </div>
+
+                                        </a>
+
+                                        <a href="/coming-soon.html"
+                                            class="flex items-start gap-4 p-4 rounded-xl hover:bg-primary/10 transition">
+
+                                            <i class="fa-brands fa-bitcoin text-accent text-xl mt-1"></i>
+
+                                            <div>
+
+                                                <h4 class="text-white font-semibold">
+                                                    Crypto Markets
+                                                </h4>
+
+                                                <p class="text-[#9A94BE] text-sm">
+                                                    BTC, ETH & blockchain predictions
+                                                </p>
+
+                                            </div>
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                            <!-- Platforms -->
+
+                            <li class="relative group">
+
+                                <button
+                                    class="flex items-center gap-2 h-18 text-white font-medium hover:text-primary transition">
+
+                                    Platforms
+
+                                    <i
+                                        class="fa-solid fa-chevron-down text-[10px] transition group-hover:rotate-180"></i>
+
+                                </button>
+
+                                <div
+                                    class="absolute left-0 top-full w-[380px] opacity-0 invisible translate-y-4 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+
+                                    <div class="rounded-2xl bg-[#131029] border border-[#272245] p-3">
+
+                                        <a href="reviews.html"
+                                            class="block p-4 rounded-xl hover:bg-primary/10">
+                                            <h4 class="text-white font-semibold">
+                                                Kalshi Review
+                                            </h4>
+                                            <p class="text-[#9A94BE] text-sm">
+                                                Complete review & fees
+                                            </p>
+                                        </a>
+
+                                        <a href="platform.html"
+                                            class="block p-4 rounded-xl hover:bg-primary/10">
+                                            <h4 class="text-white font-semibold">
+                                                Polymarket Review
+                                            </h4>
+                                            <p class="text-[#9A94BE] text-sm">
+                                                Compare features
+                                            </p>
+                                        </a>
+
+                                        <a href="platform.html"
+                                            class="block p-4 rounded-xl hover:bg-primary/10">
+                                            <h4 class="text-white font-semibold">
+                                                Robinhood Event Markets
+                                            </h4>
+                                            <p class="text-[#9A94BE] text-sm">
+                                                Beginner friendly
+                                            </p>
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                            <!-- Compare -->
+
+                            <li class="relative group">
+
+                                <button class="flex items-center gap-2 h-18 text-white font-medium hover:text-primary">
+
+                                    Compare
+
+                                    <i
+                                        class="fa-solid fa-chevron-down text-[10px] transition group-hover:rotate-180"></i>
+
+                                </button>
+
+                                <div
+                                    class="absolute left-0 top-full w-[320px] opacity-0 invisible translate-y-4 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all">
+
+                                    <div class="rounded-2xl bg-[#131029] border border-[#272245] p-3">
+
+                                        <a href="/coming-soon.html"
+                                            class="block p-4 rounded-xl hover:bg-primary/10 text-white">
+                                            Kalshi vs Polymarket
+                                        </a>
+
+                                        <a href="/coming-soon.html"
+                                            class="block p-4 rounded-xl hover:bg-primary/10 text-white">
+                                            Kalshi vs Robinhood
+                                        </a>
+
+                                        <a href="platform.html"
+                                            class="block p-4 rounded-xl hover:bg-primary/10 text-white">
+                                            Best Prediction Platforms
+                                        </a>
+
+                                        <a href="/coming-soon.html"
+                                            class="block p-4 rounded-xl hover:bg-primary/10 text-white">
+                                            Compare All
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                            <!-- Legal -->
+
+                            <li class="relative group">
+
+                                <button class="flex items-center gap-2 h-18 text-white font-medium hover:text-primary">
+
+                                    Legal by Location
+
+                                    <i
+                                        class="fa-solid fa-chevron-down text-[10px] transition group-hover:rotate-180"></i>
+
+                                </button>
+
+                                <div
+                                    class="absolute left-0 top-full w-[550px] opacity-0 invisible translate-y-4 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all">
+
+                                    <div class="rounded-2xl bg-[#131029] border border-[#272245] p-8">
+
+                                        <div class="grid grid-cols-2 gap-8">
+
+                                            <div>
+
+                                                <h4 class="text-primary font-semibold mb-4">
+                                                    United States
+                                                </h4>
+
+                                                <div class="space-y-3">
+
+                                                    <a href="/coming-soon.html"
+                                                        class="block text-[#C9C5E8] hover:text-white">
+                                                        New York
+                                                    </a>
+
+                                                    <a href="/coming-soon.html"
+                                                        class="block text-[#C9C5E8] hover:text-white">
+                                                        California
+                                                    </a>
+
+                                                    <a href="/coming-soon.html"
+                                                        class="block text-[#C9C5E8] hover:text-white">
+                                                        Florida
+                                                    </a>
+
+                                                    <a href="/coming-soon.html"
+                                                        class="block text-[#C9C5E8] hover:text-white">
+                                                        Texas
+                                                    </a>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div>
+
+                                                <h4 class="text-primary font-semibold mb-4">
+                                                    Countries
+                                                </h4>
+
+                                                <div class="space-y-3">
+
+                                                    <a href="/coming-soon.html"
+                                                        class="block text-[#C9C5E8] hover:text-white">
+                                                        Canada
+                                                    </a>
+
+                                                    <a href="/coming-soon.html"
+                                                        class="block text-[#C9C5E8] hover:text-white">
+                                                        United Kingdom
+                                                    </a>
+
+                                                    <a href="/coming-soon.html"
+                                                        class="block text-[#C9C5E8] hover:text-white">
+                                                        Australia
+                                                    </a>
+
+                                                    <a href="/coming-soon.html"
+                                                        class="block text-[#C9C5E8] hover:text-white">
+                                                        Europe
+                                                    </a>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                            <!-- Tools -->
+
+                            <li class="relative group">
+
+                                <button class="flex items-center gap-2 h-18 text-white font-medium hover:text-primary">
+
+                                    Tools
+
+                                    <i
+                                        class="fa-solid fa-chevron-down text-[10px] transition group-hover:rotate-180"></i>
+
+                                </button>
+
+                                <div
+                                    class="absolute left-0 top-full w-[300px] opacity-0 invisible translate-y-4 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition">
+
+                                    <div class="rounded-2xl bg-[#131029] border border-[#272245] p-3">
+
+                                        <a href="/coming-soon.html"
+                                            class="block p-4 rounded-xl hover:bg-primary/10 text-white">
+                                            Odds Calculator
+                                        </a>
+
+                                        <a href="/coming-soon.html"
+                                            class="block p-4 rounded-xl hover:bg-primary/10 text-white">
+                                            Probability Calculator
+                                        </a>
+
+                                        <a href="/coming-soon.html"
+                                            class="block p-4 rounded-xl hover:bg-primary/10 text-white">
+                                            Prediction Tracker
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                            <!-- Guides -->
+
+                            <li class="relative group">
+
+                                <button class="flex items-center gap-2 h-18 text-white font-medium hover:text-primary">
+
+                                    Guides
+
+                                    <i
+                                        class="fa-solid fa-chevron-down text-[10px] transition group-hover:rotate-180"></i>
+
+                                </button>
+
+                                <div
+                                    class="absolute right-0 top-full w-[320px] opacity-0 invisible translate-y-4 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all">
+
+                                    <div class="rounded-2xl bg-[#131029] border border-[#272245] p-3">
+
+                                        <a href="post.html"
+                                            class="block p-4 rounded-xl hover:bg-primary/10">
+                                            <h4 class="text-white font-semibold">
+                                                Beginner Guide
+                                            </h4>
+                                        </a>
+
+                                        <a href="post.html"
+                                            class="block p-4 rounded-xl hover:bg-primary/10">
+                                            <h4 class="text-white font-semibold">
+                                                How Prediction Markets Work
+                                            </h4>
+                                        </a>
+
+                                        <a href="blog.html" class="block p-4 rounded-xl hover:bg-primary/10">
+                                            <h4 class="text-white font-semibold">
+                                                Blog
+                                            </h4>
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                        </ul>
+
+                    </nav>
+
+                    <!-- ========================= -->
+                    <!-- Right Actions -->
+                    <!-- ========================= -->
+
+                    <div class="hidden lg:flex items-center gap-5">
+
+                        <!-- Search -->
+
+                        <button
+                            class="search-btn w-10 h-10 rounded-full border border-[#2B284A] bg-[#0F0C28] text-white hover:border-primary hover:text-primary transition duration-300 flex items-center justify-center">
+
+                            <i class="fa-solid fa-magnifying-glass text-md"></i>
+
+                        </button>
+
+                        <!-- CTA -->
+
+                        <a href="/coming-soon.html"
+                            class="h-10 px-9 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-semibold flex items-center justify-center shadow-lg shadow-primary/25 hover:scale-105 transition duration-300">
+
+                            Sign in
+
+                        </a>
+
+                    </div>
+
+                    <!-- ========================= -->
+                    <!-- Mobile Menu Button -->
+                    <!-- ========================= -->
+
+                    <button id="mobileMenuBtn"
+                        class="primary-btn xl:hidden w-12 h-12 rounded-xl border border-[#2B284A] text-white flex items-center justify-center">
+
+                        <i class="fa-solid fa-bars text-xl"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- ============================= -->
+    <!-- Mobile Overlay -->
+    <!-- ============================= -->
+
+    <div id="mobileOverlay"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm opacity-0 invisible transition-all duration-300 z-[90] xl:hidden">
+    </div>
+
+    <!-- ============================= -->
+    <!-- Mobile Menu -->
+    <!-- ============================= -->
+
+    <aside id="mobileMenu"
+        class="fixed top-0 right-0 w-[360px] max-w-full h-screen bg-[#0B0920] border-l border-[#252042] translate-x-full transition-transform duration-300 ease-in-out z-[100] xl:hidden flex flex-col">
+
+        <!-- Header -->
+
+        <div class="flex items-center justify-between px-6 h-24 border-b border-[#252042]">
+
+            <div class="flex items-center gap-3">
+
+                <div
+                    class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+
+                    <i class="fa-solid fa-chart-column text-white text-xl"></i>
+
+                </div>
+
+                <div>
+
+                    <h3 class="text-white font-black text-xl">
+                        SMART
+                    </h3>
+
+                    <p class="text-[#C9C5E8] text-xs uppercase">
+                        Prediction Hub
+                    </p>
+
+                </div>
+
+            </div>
+
+            <button id="closeMobileMenu"
+                class="w-10 h-10 rounded-lg border border-[#2A2745] text-white hover:bg-primary transition">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <!-- Search -->
+
+        <div class="p-6 border-b border-[#252042]">
+
+            <div class="relative">
+
+                <input type="text" placeholder="Search..."
+                    class="w-full h-12 rounded-xl bg-[#131029] border border-[#252042] pl-12 pr-4 text-white placeholder:text-gray-400 focus:border-primary outline-none">
+
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+
+            </div>
+
+        </div>
+
+        <!-- Navigation -->
+
+        <div class="flex-1 overflow-y-auto">
+
+            <nav class="p-6 space-y-2">
+
+                <!-- Markets -->
+
+                <div class="mobile-dropdown">
+
+                    <button
+                        class="mobile-trigger flex items-center justify-between w-full h-14 px-4 rounded-xl text-white hover:bg-[#161233] transition">
+
+                        <span>Markets</span>
+
+                        <i class="fa-solid fa-chevron-down text-xs transition"></i>
+
+                    </button>
+
+                    <div class="mobile-content hidden">
+
+                        <div class="pl-6 py-3 space-y-3">
+
+                            <a href="/coming-soon.html" class="block text-[#B8B4D9] hover:text-primary">
+                                Political Markets
+                            </a>
+
+                            <a href="/coming-soon.html" class="block text-[#B8B4D9] hover:text-primary">
+                                Sports Markets
+                            </a>
+
+                            <a href="/coming-soon.html" class="block text-[#B8B4D9] hover:text-primary">
+                                Crypto Markets
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Platforms -->
+
+                <div class="mobile-dropdown">
+
+                    <button
+                        class="mobile-trigger flex justify-between items-center w-full h-14 px-4 rounded-xl text-white hover:bg-[#161233]">
+
+                        <span>Platforms</span>
+
+                        <i class="fa-solid fa-chevron-down text-xs transition"></i>
+
+                    </button>
+
+                    <div class="mobile-content hidden">
+
+                        <div class="pl-6 py-3 space-y-3">
+
+                            <a href="reviews.html" class="block text-[#B8B4D9]">
+                                Kalshi
+                            </a>
+
+                            <a href="platform.html" class="block text-[#B8B4D9]">
+                                Polymarket
+                            </a>
+
+                            <a href="/coming-soon.html" class="block text-[#B8B4D9]">
+                                Robinhood
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Compare -->
+
+                <a href="/coming-soon.html"
+                    class="flex items-center h-14 px-4 rounded-xl text-white hover:bg-[#161233]">
+
+                    Compare
+
+                </a>
+
+                <!-- Legal -->
+
+                <div class="mobile-dropdown">
+
+                    <button
+                        class="mobile-trigger flex justify-between items-center w-full h-14 px-4 rounded-xl text-white hover:bg-[#161233]">
+
+                        <span>Legal by Location</span>
+
+                        <i class="fa-solid fa-chevron-down text-xs transition"></i>
+
+                    </button>
+
+                    <div class="mobile-content hidden">
+
+                        <div class="pl-6 py-3 space-y-3">
+
+                            <a href="/coming-soon.html" class="block text-[#B8B4D9]">
+                                New York
+                            </a>
+
+                            <a href="/coming-soon.html" class="block text-[#B8B4D9]">
+                                California
+                            </a>
+
+                            <a href="/coming-soon.html" class="block text-[#B8B4D9]">
+                                Florida
+                            </a>
+
+                            <a href="/coming-soon.html" class="block text-[#B8B4D9]">
+                                Texas
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Tools -->
+
+                <div class="mobile-dropdown">
+
+                    <button
+                        class="mobile-trigger flex justify-between items-center w-full h-14 px-4 rounded-xl text-white hover:bg-[#161233]">
+
+                        <span>Tools</span>
+
+                        <i class="fa-solid fa-chevron-down text-xs transition"></i>
+
+                    </button>
+
+                    <div class="mobile-content hidden">
+
+                        <div class="pl-6 py-3 space-y-3">
+
+                            <a href="/coming-soon.html" class="block text-[#B8B4D9]">
+                                Odds Calculator
+                            </a>
+
+                            <a href="/coming-soon.html" class="block text-[#B8B4D9]">
+                                Probability Calculator
+                            </a>
+
+                            <a href="/coming-soon.html" class="block text-[#B8B4D9]">
+                                Tracker
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Guides -->
+
+                <div class="mobile-dropdown">
+
+                    <button
+                        class="mobile-trigger flex justify-between items-center w-full h-14 px-4 rounded-xl text-white hover:bg-[#161233]">
+
+                        <span>Guides</span>
+
+                        <i class="fa-solid fa-chevron-down text-xs transition"></i>
+
+                    </button>
+
+                    <div class="mobile-content hidden">
+
+                        <div class="pl-6 py-3 space-y-3">
+
+                            <a href="post.html" class="block text-[#B8B4D9]">
+                                Beginner Guide
+                            </a>
+
+                            <a href="post.html" class="block text-[#B8B4D9]">
+                                How It Works
+                            </a>
+
+                            <a href="blog.html" class="block text-[#B8B4D9]">
+                                Blog
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </nav>
+
+        </div>
+
+        <!-- Footer -->
+
+        <div class="border-t border-[#252042] p-6 space-y-5">
+
+            <a href="/coming-soon.html"
+                class="h-14 rounded-xl bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white font-semibold">
+
+                Explore
+
+            </a>
+
+            <div class="flex justify-center gap-4">
+
+                <a href="/coming-soon.html"
+                    class="w-11 h-11 rounded-full border border-[#2A2745] flex items-center justify-center text-white hover:bg-primary transition">
+
+                    <i class="fab fa-facebook-f"></i>
+
+                </a>
+
+                <a href="/coming-soon.html"
+                    class="w-11 h-11 rounded-full border border-[#2A2745] flex items-center justify-center text-white hover:bg-primary transition">
+
+                    <i class="fab fa-x-twitter"></i>
+
+                </a>
+
+                <a href="/coming-soon.html"
+                    class="w-11 h-11 rounded-full border border-[#2A2745] flex items-center justify-center text-white hover:bg-primary transition">
+
+                    <i class="fab fa-instagram"></i>
+
+                </a>
+
+                <a href="/coming-soon.html"
+                    class="w-11 h-11 rounded-full border border-[#2A2745] flex items-center justify-center text-white hover:bg-primary transition">
+
+                    <i class="fab fa-linkedin-in"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            /*=====================================
+              Elements
+            =====================================*/
+
+            const body = document.body;
+
+            const header = document.getElementById("siteHeader");
+
+            const mobileMenu = document.getElementById("mobileMenu");
+
+            const mobileOverlay = document.getElementById("mobileOverlay");
+
+            const openBtn = document.getElementById("mobileMenuBtn");
+
+            const closeBtn = document.getElementById("closeMobileMenu");
+
+            const accordionButtons = document.querySelectorAll(".mobile-trigger");
+
+
+
+            /*=====================================
+              Mobile Menu
+            =====================================*/
+
+            function openMobileMenu() {
+
+                mobileMenu.classList.remove("translate-x-full");
+
+                mobileOverlay.classList.remove("opacity-0", "invisible");
+
+                body.classList.add("overflow-hidden");
+
+            }
+
+            function closeMobileMenu() {
+
+                mobileMenu.classList.add("translate-x-full");
+
+                mobileOverlay.classList.add("opacity-0", "invisible");
+
+                body.classList.remove("overflow-hidden");
+
+            }
+
+            openBtn.addEventListener("click", openMobileMenu);
+
+            closeBtn.addEventListener("click", closeMobileMenu);
+
+            mobileOverlay.addEventListener("click", closeMobileMenu);
+
+
+
+            /*=====================================
+              ESC Close
+            =====================================*/
+
+            document.addEventListener("keydown", (e) => {
+
+                if (e.key === "Escape") {
+
+                    closeMobileMenu();
+
+                }
+
+            });
+
+
+
+            /*=====================================
+              Mobile Accordion
+              (Only One Open)
+            =====================================*/
+
+            accordionButtons.forEach(button => {
+
+                button.addEventListener("click", () => {
+
+                    const parent = button.parentElement;
+
+                    const content = parent.querySelector(".mobile-content");
+
+                    const icon = button.querySelector("i");
+
+                    const isOpen = !content.classList.contains("hidden");
+
+                    document.querySelectorAll(".mobile-content").forEach(item => {
+
+                        item.classList.add("hidden");
+
+                    });
+
+                    document.querySelectorAll(".mobile-trigger i").forEach(i => {
+
+                        i.classList.remove("rotate-180");
+
+                    });
+
+                    if (!isOpen) {
+
+                        content.classList.remove("hidden");
+
+                        icon.classList.add("rotate-180");
+
+                    }
+
+                });
+
+            });
+
+
+
+            /*=====================================
+              Sticky Header
+            =====================================*/
+
+            let lastScroll = 0;
+
+            window.addEventListener("scroll", () => {
+
+                const currentScroll = window.pageYOffset;
+
+                if (currentScroll <= 0) {
+
+                    header.classList.remove(
+                        "shadow-2xl",
+                        "bg-[#09071B]/95",
+                        "backdrop-blur-xl"
+                    );
+
+                    header.style.transform = "translateY(0)";
+
+                    return;
+
+                }
+
+                header.classList.add(
+                    "shadow-2xl",
+                    "bg-[#09071B]/95",
+                    "backdrop-blur-xl"
+                );
+
+                if (
+                    currentScroll > lastScroll &&
+                    currentScroll > 120
+                ) {
+
+                    header.style.transform = "translateY(-100%)";
+
+                } else {
+
+                    header.style.transform = "translateY(0)";
+
+                }
+
+                lastScroll = currentScroll;
+
+            });
+
+
+
+            /*=====================================
+              Active Navigation
+            =====================================*/
+
+            const navButtons = document.querySelectorAll("nav ul li button");
+
+            navButtons.forEach(btn => {
+
+                btn.addEventListener("click", () => {
+
+                    navButtons.forEach(item => {
+
+                        item.classList.remove("text-primary");
+
+                        item.classList.add("text-white");
+
+                    });
+
+                    btn.classList.remove("text-white");
+
+                    btn.classList.add("text-primary");
+
+                });
+
+            });
+
+
+
+            /*=====================================
+              Desktop Dropdown
+              Close When Clicking Outside
+            =====================================*/
+
+            document.addEventListener("click", (e) => {
+
+                if (!e.target.closest(".group")) {
+
+                    document.querySelectorAll(".group").forEach(item => {
+
+                        const menu = item.querySelector("div.absolute");
+
+                        if (!menu) return;
+
+                        menu.classList.add(
+                            "opacity-0",
+                            "invisible",
+                            "translate-y-4"
+                        );
+
+                    });
+
+                }
+
+            });
+
+
+
+            /*=====================================
+              Resize Fix
+            =====================================*/
+
+            window.addEventListener("resize", () => {
+
+                if (window.innerWidth >= 1280) {
+
+                    closeMobileMenu();
+
+                }
+
+            });
+
+        });
+    </script>
+    
+<div class="hero-visual">
+  <div class="hero-visual-inner">
+    <div class="hero-grid"></div>
+    <div class="visual-copy">
+      <small>EVENT CONTRACT BASICS</small>
+      <h2>A market price is a live view — not a guarantee.</h2>
+      <p>Prices move as traders react to new information, liquidity and changing expectations.</p>
+    </div>
+
+    <div class="visual-market">
+      <small>ILLUSTRATIVE MARKET</small>
+      <b>Will Event A happen before the deadline?</b>
+      <div class="visual-prices"><span>YES · 63¢</span><span>NO · 37¢</span></div>
+    </div>
+  </div>
+</div>
+
+<main class="page-wrap article-shell">
+  <div class="article-layout">
+
+    <article class="article-card card">
+      <p class="lead">Prediction markets turn questions about future events into contracts that can be priced and traded. The easiest way to understand them is to focus on three things: what the contract says, what the current price represents and how the market resolves.</p>
+
+      <div class="key-takeaways">
+        <strong>KEY TAKEAWAYS</strong>
+        <ul>
+          <li>A Yes/No contract usually settles according to a predefined outcome and resolution source.</li>
+          <li>A price such as 63¢ is often read as roughly 63% implied probability, but it is still a market price rather than a promise.</li>
+          <li>Fees, spread, liquidity and settlement rules can change the experience even when two platforms list similar questions.</li>
+        </ul>
+      </div>
+
+      <h2 id="what-is">What is a prediction market?</h2>
+      <p>A prediction market is a market built around the outcome of a future event. Instead of buying a share in a company, you take a position on a specific question. That question might be about politics, sports, economics, technology, weather or another measurable event.</p>
+      <p>The contract rules matter more than the headline. A well-designed market states exactly what counts as a Yes result, what counts as a No result, the deadline and the source used to resolve the outcome.</p>
+
+      <h2 id="yes-no">How Yes and No contracts work</h2>
+      <p>Many event contracts use a binary structure. You can take the Yes side if you think the stated event will happen, or the No side if you think it will not.</p>
+
+      <div class="example-box">
+        <h3>Simple example</h3>
+        <p>Imagine a Yes contract is trading at 63¢. If the event later resolves Yes under the contract rules, a winning contract may settle at $1. If it resolves No, the Yes contract may settle at $0. The exact mechanics depend on the platform and contract terms.</p>
+      </div>
+
+      <h2 id="price">What does a 63¢ price mean?</h2>
+      <p>People often read 63¢ as approximately a 63% market-implied probability. That is a useful mental model, but the price is still created by market activity. It can move because participants disagree, new information arrives or liquidity changes.</p>
+      <p>A market can also have a wide spread between the price available to buy and the price available to sell. That is why the displayed headline probability should not be the only number you check.</p>
+
+      <h2 id="movement">Why prices move</h2>
+      <p>Prediction-market prices move for many of the same reasons other market prices move: new evidence, changing expectations and differences between buyers and sellers. A fresh poll, injury report, economic release or official announcement can move a contract quickly.</p>
+      <ul>
+        <li><strong>New information:</strong> data changes how participants view the event.</li>
+        <li><strong>Liquidity:</strong> thin markets can move more sharply from a small number of orders.</li>
+        <li><strong>Time:</strong> uncertainty can rise or fall as the resolution date gets closer.</li>
+        <li><strong>Rules:</strong> clarification about the contract wording can affect pricing.</li>
+      </ul>
+
+      <h2 id="settlement">How settlement works</h2>
+      <p>When a market reaches its resolution point, the platform applies the contract rules and named resolution source. This is where careful reading becomes important. Two questions that sound nearly identical can settle differently if their rules use different dates, thresholds or official sources.</p>
+
+      <div class="article-note">
+        <strong>Important:</strong> read the full contract terms before relying on the market title alone. The title is a summary; the resolution criteria control the outcome.
+      </div>
+
+      <h2 id="fees">Fees, spread and liquidity</h2>
+      <p>Your result is not determined only by whether your view was correct. Trading fees, exchange fees, spread and the price at which you can exit a position can all matter. Some platforms use a simple fee structure while others calculate fees according to price, contract type or exchange venue.</p>
+      <p>Liquidity matters because it tells you whether enough participants are available around the price you want. Headline platform volume does not necessarily mean every individual market is deep.</p>
+
+      <h2 id="checklist">What to check before placing a trade</h2>
+      <ul>
+        <li>Exact contract question and resolution criteria.</li>
+        <li>Named source used to determine the final outcome.</li>
+        <li>Current Yes/No price and bid/ask spread.</li>
+        <li>Available size or market depth.</li>
+        <li>Trading and exchange fees.</li>
+        <li>Your location eligibility and account requirements.</li>
+        <li>Whether the position can be closed before settlement.</li>
+      </ul>
+
+      <h2 id="bottom-line">Bottom line</h2>
+      <p>Prediction markets are easiest to understand when you treat the contract wording as the foundation. The price can help summarize the market's current view, but it changes continuously and does not remove uncertainty. Before using any platform, compare its rules, fees, liquidity, access requirements and settlement process rather than choosing on the headline probability alone.</p>
+
+      <div class="author-box card">
+        <div class="author-avatar">SPH</div>
+        <div>
+          <h3>Smart Prediction Hub Editorial Team</h3>
+          <p>We publish platform research, explainers and comparison frameworks designed to make prediction-market products easier to understand.</p>
+        </div>
+      </div>
+    </article>
+
+    <aside>
+      <div class="toc-card card">
+        <h3>In this guide</h3>
+        <a href="#what-is">What is a prediction market?</a>
+        <a href="#yes-no">Yes and No contracts</a>
+        <a href="#price">Understanding price</a>
+        <a href="#movement">Why prices move</a>
+        <a href="#settlement">Settlement</a>
+        <a href="#fees">Fees & liquidity</a>
+        <a href="#checklist">Pre-trade checklist</a>
+        <a href="#bottom-line">Bottom line</a>
+
+        <div class="share-row" aria-label="Share article">
+          <a href="/coming-soon.html" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="/coming-soon.html" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="/coming-soon.html" aria-label="Copy link"><i class="fa-solid fa-link"></i></a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<section class="related-section">
+  <div class="page-wrap">
+    <div class="section-head">
+      <div>
+        <h2>Continue reading</h2>
+        <p>Build on the basics with platform comparisons, pricing and liquidity guides.</p>
+      </div>
+      <a class="section-link" href="blog.html">View all articles →</a>
+    </div>
+
+    <div class="related-grid">
+      <article class="related-card card">
+        <div class="icon"><i class="fa-solid fa-scale-balanced"></i></div>
+        <small>COMPARISON</small>
+        <h3>Kalshi vs Polymarket: What Actually Changes?</h3>
+        <p>Compare access, funding, market structure and settlement.</p>
+        <a class="read-link" href="/coming-soon.html">Read article <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+
+      <article class="related-card card">
+        <div class="icon"><i class="fa-solid fa-coins"></i></div>
+        <small>FEES</small>
+        <h3>Prediction Market Fees Explained</h3>
+        <p>Understand commissions, exchange charges and the cost of spread.</p>
+        <a class="read-link" href="/coming-soon.html">Read article <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+
+      <article class="related-card card">
+        <div class="icon"><i class="fa-solid fa-water"></i></div>
+        <small>MARKET RESEARCH</small>
+        <h3>Why Liquidity Matters More Than Headline Volume</h3>
+        <p>Look at depth, available size and spread where you actually trade.</p>
+        <a class="read-link" href="/coming-soon.html">Read article <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="stay-informed-section">
+  <div class="stay-informed-inner">
+    <div class="stay-informed-copy">
+      <span class="stay-kicker">STAY INFORMED</span>
+      <h2>Follow prediction markets with better context.</h2>
+      <p>Platform updates, practical explainers and weekly market reading from Smart Prediction Hub.</p>
+    </div>
+    <form class="stay-email-form" action="/coming-soon.html" method="get">
+      <div class="stay-email-box">
+        <i class="fa-regular fa-envelope"></i>
+        <input type="email" name="email" placeholder="Enter your email address" aria-label="Email address" required>
+        <button type="submit">Subscribe <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+      <small>Weekly insights. No spam.</small>
+    </form>
+  </div>
+</section>
+<footer class="foot">
+        <div class="wrap">
+            <div class="footer-grid">
+                <div>
+                    <h4>ABOUT SMART PREDICTION HUB</h4>
+                    <p>Platform research, location guidance and market context to help readers understand prediction
+                        markets.</p>
+                    <div class="flex items-center gap-2 mt-4" aria-label="Social media links">
+
+    <a href="https://t.me/smartpredictionhub"
+       aria-label="Telegram"
+       class="!m-0 !inline-flex w-9 h-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[#D3CBE3] hover:!text-white hover:bg-primary hover:border-primary transition">
+        <i class="fa-brands fa-telegram"></i>
+    </a>
+
+    <a href="https://discord.gg/AjsJXhmTfw"
+       aria-label="Discord"
+       class="!m-0 !inline-flex w-9 h-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[#D3CBE3] hover:!text-white hover:bg-primary hover:border-primary transition">
+        <i class="fa-brands fa-discord"></i>
+    </a>
+
+</div>
+                </div>
+                <div>
+                    <h4>QUICK LINKS</h4><a href="/coming-soon.html">Markets</a><a
+                        href="platform.html">Platforms</a><a href="/coming-soon.html">Compare
+                        Platforms</a><a href="/coming-soon.html">Legal by Location</a><a
+                        href="/coming-soon.html">Platform Finder</a>
+                </div>
+                <div>
+                    <h4>POPULAR MARKETS</h4>
+                    <div class="foot-tags"><a href="/coming-soon.html">Politics</a><a href="/coming-soon.html">Sports</a><a
+                            href="/coming-soon.html">Bitcoin</a><a href="/coming-soon.html">Economy</a><a
+                            href="/coming-soon.html">Technology</a><a href="/coming-soon.html">World Events</a></div>
+                </div>
+                <div>
+                    <h4>TOOLS</h4><a href="/coming-soon.html">Platform Finder</a><a
+                        href="/coming-soon.html">Fee Calculator</a><a
+                        href="/coming-soon.html">Volume Dashboard</a>
+                </div>
+                <div>
+                    <h4>RESEARCH STANDARDS</h4><a href="/coming-soon.html">Methodology</a><a
+                        href="/coming-soon.html">Editorial Policy</a><a href="/coming-soon.html">About SPH</a>
+                </div>
+            </div>
+            <div class="foot-bottom"><span>Smart Prediction Hub · Design preview</span><span>Event contracts carry risk.
+                    Sample content is not trading guidance.</span><a href="/coming-soon.html">Back to top ↑</a></div>
+        </div>
+    </footer>
+</body>
+</html>

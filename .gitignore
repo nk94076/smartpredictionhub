@@ -1,0 +1,8 @@
+# Secrets — copy app/config.sample.php to app/config.php on the server
+app/config.php
+app/sessions/*
+!app/sessions/.gitkeep
+*.sql
+*.zip
+.DS_Store
+cache/
