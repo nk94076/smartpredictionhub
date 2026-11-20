@@ -1,4 +1,8 @@
-import re, sys
+import re, sys, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import importlib.util
+_spec = importlib.util.spec_from_file_location('clean_urls', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'clean-urls.py'))
+clean_urls = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(clean_urls)
 root = sys.argv[1]
 src = open(f'{root}/index.html', encoding='utf-8').read()
 
@@ -54,7 +58,7 @@ def live_topbar(html):
                   r'\1<span id="mk-updated">–</span>\2', html)
     return html
 
-out = links(live_topbar(src))
+out = clean_urls.clean_html(links(live_topbar(src)))  # extension-less URLs
 lines = out.split('\n')
 
 def find(pat, start=0):
@@ -77,10 +81,12 @@ head = '\n'.join(lines[:style_end + 1])
 head = re.sub(r'<title>.*?</title>', '<title><?= htmlspecialchars($pageTitle ?? "Smart Prediction Hub", ENT_QUOTES) ?></title>\n'
               '    <meta name="description" content="<?= htmlspecialchars($pageDescription ?? "", ENT_QUOTES) ?>">\n'
               '    <?php if (!empty($canonical)): ?><link rel="canonical" href="<?= htmlspecialchars($canonical, ENT_QUOTES) ?>"><?php endif; ?>', head, count=1)
-top = ('<?php /* Shared page top, generated from index.html by deploy/build-layout.py — edit index.html, then re-run. */ ?>\n'
+top = ("<?php if (!defined('SPH_APP')) { http_response_code(404); exit; } ?>\n"
+       '<?php /* Shared page top, generated from index.html by deploy/build-layout.py — edit index.html, then re-run. */ ?>\n'
        + head + '\n    <link rel="stylesheet" href="/assets/markets.css?v=<?= @filemtime(__DIR__ . "/../assets/markets.css") ?>">\n</head>\n'
        + '\n'.join(lines[body:header_end + 1]) + '\n')
-bottom = ('<?php /* Shared page bottom, generated from index.html by deploy/build-layout.py. */ ?>\n'
+bottom = ("<?php if (!defined('SPH_APP')) { http_response_code(404); exit; } ?>\n"
+          '<?php /* Shared page bottom, generated from index.html by deploy/build-layout.py. */ ?>\n'
           + '\n'.join(lines[foot_s:foot_e + 1])
           + '\n    <script src="/assets/markets.js?v=<?= @filemtime(__DIR__ . "/../assets/markets.js") ?>" defer></script>\n</body>\n</html>\n')
 open(f'{root}/includes/layout-top.php', 'w', encoding='utf-8').write(top)

@@ -71,7 +71,7 @@
         if (m < 60) return m + ' min ago';
         return Math.round(m / 60) + 'h ago';
     };
-    const eventUrl = id => '/event.php?id=' + encodeURIComponent(id);
+    const eventUrl = id => '/event/' + encodeURIComponent(id);
     const platIcon = (k, title) => {
         const p = PLATFORMS[k];
         if (!p) return '';
@@ -143,22 +143,22 @@
     function paintCards(root, cards, stats) {
         if (!root || !cards) return;
         const t = cards.trending || [];
-        const trending = `<div class="mk-card"><div class="mk-card-head"><h3><i class="fa-solid fa-arrow-trend-up text-[#4F46E5]"></i> Trending</h3><a href="/markets.php?tab=trending">View more ›</a></div>
+        const trending = `<div class="mk-card"><div class="mk-card-head"><h3><i class="fa-solid fa-arrow-trend-up text-[#4F46E5]"></i> Trending</h3><a href="/markets?tab=trending">View more ›</a></div>
             <ol class="mk-trend-list">${t.map((e, i) => `<li><span class="n">${i + 1}</span><a href="${eventUrl(e.id)}" title="${esc(e.title)}">${esc(e.lead ? e.lead : e.title)}</a><b>${pct(e.consensus)}</b>${change(e.change) || '<span></span>'}</li>`).join('')}</ol>
             <div class="mk-card-foot"><span>By 24h volume</span></div></div>`;
         const b = cards.breaking;
-        const breaking = b ? `<div class="mk-card dark"><div class="mk-card-head"><h3><i class="fa-solid fa-bolt"></i> Live · Breaking</h3><a href="/markets.php?tab=breaking">View more ›</a></div>
+        const breaking = b ? `<div class="mk-card dark"><div class="mk-card-head"><h3><i class="fa-solid fa-bolt"></i> Live · Breaking</h3><a href="/markets?tab=breaking">View more ›</a></div>
             <a class="mk-card-title" href="${eventUrl(b.id)}">${esc(b.title)}${b.lead ? ' — ' + esc(b.lead) : ''}</a>
             <div class="mk-card-foot"><span class="mk-big" style="color:${b.change > 0 ? '#34D399' : '#FCA5A5'}">${b.change > 0 ? '+' : ''}${Math.round(b.change)} pts</span><span>last 24 hours · now ${pct(b.consensus)}</span></div></div>` : '';
         const g = cards.gap;
-        const gap = g ? `<div class="mk-card"><div class="mk-card-head"><h3><i class="fa-solid fa-code-compare text-[#7C3AED]"></i> Biggest price gap</h3><a href="/markets.php?tab=matched">Matched ›</a></div>
+        const gap = g ? `<div class="mk-card"><div class="mk-card-head"><h3><i class="fa-solid fa-code-compare text-[#7C3AED]"></i> Biggest price gap</h3><a href="/markets?tab=matched">Matched ›</a></div>
             <a class="mk-card-title" href="${eventUrl(g.id)}">${esc(g.title)}${g.outcome ? ' — ' + esc(g.outcome) : ''}</a>
             <div class="mk-card-foot"><span>${platIcon(g.low[0])} ${pct(g.low[1])} &nbsp;vs&nbsp; ${platIcon(g.high[0])} ${pct(g.high[1])}</span><span class="mk-big">${Math.round(g.spread * 100)} pts</span></div></div>` : '';
         let cover = '';
         if (stats) {
             const counts = stats.platform_counts || {};
             const s = stats.share || { polymarket: 0, kalshi: 0 };
-            cover = `<div class="mk-card"><div class="mk-card-head"><h3><i class="fa-solid fa-layer-group text-[#10B981]"></i> Coverage</h3><a href="/markets.php">All events ›</a></div>
+            cover = `<div class="mk-card"><div class="mk-card-head"><h3><i class="fa-solid fa-layer-group text-[#10B981]"></i> Coverage</h3><a href="/markets">All events ›</a></div>
                 <div class="mk-kv"><span>Polymarket <b>${s.polymarket}%</b></span><span style="text-align:right">Kalshi <b>${s.kalshi}%</b></span></div>
                 <div class="mk-share-bar"><span style="width:${s.polymarket}%;background:#2E5CFF"></span><span style="width:${s.kalshi}%;background:#00D991"></span></div>
                 <div class="mk-kv">${Object.keys(PLATFORMS).map(k => `<span>${PLATFORMS[k].name} <b>${(counts[k] || 0).toLocaleString()}</b></span>`).join('')}</div>
@@ -243,7 +243,7 @@
         const url = new URL(location.href);
         const state = {
             tab: url.searchParams.get('tab') || 'all',
-            category: url.searchParams.get('category') || '',
+            category: (location.pathname.match(/^\/markets\/([a-z]+)/) || [])[1] || url.searchParams.get('category') || '',
             platform: url.searchParams.get('platform') || '',
             ends: url.searchParams.get('ends') || '',
             q: url.searchParams.get('q') || '',
@@ -292,7 +292,9 @@
 
         function syncUrl() {
             const u = new URL(location.href);
-            ['tab', 'category', 'platform', 'ends', 'q', 'sort', 'dir'].forEach(k => {
+            u.pathname = state.category ? '/markets/' + state.category : '/markets';
+            u.searchParams.delete('category');
+            ['tab', 'platform', 'ends', 'q', 'sort', 'dir'].forEach(k => {
                 const v = state[k];
                 (v && !(k === 'tab' && v === 'all')) ? u.searchParams.set(k, v) : u.searchParams.delete(k);
             });
@@ -388,7 +390,7 @@
         const events = new Map();
         root.innerHTML = `<div class="mk-cards" id="mk-cards">${'<div class="mk-card"><span class="mk-skel" style="width:40%"></span><span class="mk-skel" style="margin-top:14px"></span></div>'.repeat(4)}</div>
             <div class="mk-table-wrap"><div class="mk-scroll"><table class="mk-table"><tbody><tr><td><span class="mk-skel"></span></td></tr></tbody></table></div>
-            <div class="mk-more"><a class="mk-btn" href="/markets.php" style="background:#4F46E5;color:#fff;border-color:#4F46E5">View all events <i class="fa-solid fa-arrow-right"></i></a></div>
+            <div class="mk-more"><a class="mk-btn" href="/markets" style="background:#4F46E5;color:#fff;border-color:#4F46E5">View all events <i class="fa-solid fa-arrow-right"></i></a></div>
             <div class="mk-note">Consensus is the volume-weighted probability across Polymarket, Kalshi, Limitless and PredictIt. <span id="mk-upd"></span></div></div>`;
         const table = $('table', root);
         try {
@@ -471,7 +473,7 @@
             $('#mk-ev-related').innerHTML = rel.events.filter(x => x.id !== e.id).slice(0, 6)
                 .map(x => `<a href="${eventUrl(x.id)}">${esc(x.title)}<span>${pct(x.consensus)}</span></a>`).join('') || '<div class="pad">No related events.</div>';
         } catch (err) {
-            root.querySelector('.mk-grid').innerHTML = '<div class="mk-empty">This event could not be loaded. It may have closed. <a href="/markets.php" style="color:#4F46E5;font-weight:600">Browse all events</a></div>';
+            root.querySelector('.mk-grid').innerHTML = '<div class="mk-empty">This event could not be loaded. It may have closed. <a href="/markets" style="color:#4F46E5;font-weight:600">Browse all events</a></div>';
         }
     }
 

@@ -23,7 +23,7 @@ Live market data is fetched by a cron job into `app/cache/` — no database need
    mkdir -p app/cache app/sessions && chmod 755 app/cache app/sessions
    php app/cron/refresh-markets.php -v   # first data load, takes 1–3 minutes
    ```
-6. **Vhost** — Site → Vhost: paste `deploy/nginx-cloudpanel.conf` above the `location ~ \.php$` block.
+6. **Vhost** — Site → Vhost: paste `deploy/nginx-cloudpanel.conf` right after the `root` line, before every other `location` block.
    nginx ignores `.htaccess`, so without this `app/`, `includes/` and the sessions folder are readable.
 7. **Cron** — Site → Cron Jobs → Add:
    - Schedule: `*/5 * * * *`

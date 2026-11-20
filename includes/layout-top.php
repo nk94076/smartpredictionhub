@@ -1,3 +1,4 @@
+<?php if (!defined('SPH_APP')) { http_response_code(404); exit; } ?>
 <?php /* Shared page top, generated from index.html by deploy/build-layout.py — edit index.html, then re-run. */ ?>
 <!doctype html>
 <html lang="en">
@@ -4987,7 +4988,7 @@ STAY INFORMED EMAIL
 
                                     <div class="rounded-2xl bg-[#131029] border border-[#272245] shadow-2xl p-3">
 
-                                        <a href="/markets.php"
+                                        <a href="/markets"
                                             class="flex items-start gap-4 p-4 rounded-xl hover:bg-primary/10 transition">
                                             <i class="fa-solid fa-bolt text-accent text-xl mt-1"></i>
                                             <div>
@@ -4996,7 +4997,7 @@ STAY INFORMED EMAIL
                                             </div>
                                         </a>
 
-                                        <a href="/markets.php?category=politics"
+                                        <a href="/markets/politics"
                                             class="flex items-start gap-4 p-4 rounded-xl hover:bg-primary/10 transition">
 
                                             <i class="fa-solid fa-chart-line text-primary text-xl mt-1"></i>
@@ -5015,7 +5016,7 @@ STAY INFORMED EMAIL
 
                                         </a>
 
-                                        <a href="/markets.php?category=sports"
+                                        <a href="/markets/sports"
                                             class="flex items-start gap-4 p-4 rounded-xl hover:bg-primary/10 transition">
 
                                             <i class="fa-solid fa-futbol text-success text-xl mt-1"></i>
@@ -5034,7 +5035,7 @@ STAY INFORMED EMAIL
 
                                         </a>
 
-                                        <a href="/markets.php?category=crypto"
+                                        <a href="/markets/crypto"
                                             class="flex items-start gap-4 p-4 rounded-xl hover:bg-primary/10 transition">
 
                                             <i class="fa-brands fa-bitcoin text-accent text-xl mt-1"></i>
@@ -5078,7 +5079,7 @@ STAY INFORMED EMAIL
 
                                     <div class="rounded-2xl bg-[#131029] border border-[#272245] p-3">
 
-                                        <a href="02-platform-review-kalshi.html"
+                                        <a href="/02-platform-review-kalshi"
                                             class="block p-4 rounded-xl hover:bg-primary/10">
                                             <h4 class="text-white font-semibold">
                                                 Kalshi Review
@@ -5088,7 +5089,7 @@ STAY INFORMED EMAIL
                                             </p>
                                         </a>
 
-                                        <a href="01-platforms-index.html"
+                                        <a href="/01-platforms-index"
                                             class="block p-4 rounded-xl hover:bg-primary/10">
                                             <h4 class="text-white font-semibold">
                                                 Polymarket Review
@@ -5098,7 +5099,7 @@ STAY INFORMED EMAIL
                                             </p>
                                         </a>
 
-                                        <a href="01-platforms-index.html"
+                                        <a href="/01-platforms-index"
                                             class="block p-4 rounded-xl hover:bg-primary/10">
                                             <h4 class="text-white font-semibold">
                                                 Robinhood Event Markets
@@ -5132,22 +5133,22 @@ STAY INFORMED EMAIL
 
                                     <div class="rounded-2xl bg-[#131029] border border-[#272245] p-3">
 
-                                        <a href="08-compare-kalshi-vs-polymarket.html"
+                                        <a href="/08-compare-kalshi-vs-polymarket"
                                             class="block p-4 rounded-xl hover:bg-primary/10 text-white">
                                             Kalshi vs Polymarket
                                         </a>
 
-                                        <a href="07-comparison-index.html"
+                                        <a href="/07-comparison-index"
                                             class="block p-4 rounded-xl hover:bg-primary/10 text-white">
                                             Kalshi vs Robinhood
                                         </a>
 
-                                        <a href="01-platforms-index.html"
+                                        <a href="/01-platforms-index"
                                             class="block p-4 rounded-xl hover:bg-primary/10 text-white">
                                             Best Prediction Platforms
                                         </a>
 
-                                        <a href="07-comparison-index.html"
+                                        <a href="/07-comparison-index"
                                             class="block p-4 rounded-xl hover:bg-primary/10 text-white">
                                             Compare All
                                         </a>
@@ -5186,22 +5187,22 @@ STAY INFORMED EMAIL
 
                                                 <div class="space-y-3">
 
-                                                    <a href="18-jurisdiction-new-york.html"
+                                                    <a href="/18-jurisdiction-new-york"
                                                         class="block text-[#C9C5E8] hover:text-white">
                                                         New York
                                                     </a>
 
-                                                    <a href="14-jurisdiction-index.html"
+                                                    <a href="/14-jurisdiction-index"
                                                         class="block text-[#C9C5E8] hover:text-white">
                                                         California
                                                     </a>
 
-                                                    <a href="14-jurisdiction-index.html"
+                                                    <a href="/14-jurisdiction-index"
                                                         class="block text-[#C9C5E8] hover:text-white">
                                                         Florida
                                                     </a>
 
-                                                    <a href="14-jurisdiction-index.html"
+                                                    <a href="/14-jurisdiction-index"
                                                         class="block text-[#C9C5E8] hover:text-white">
                                                         Texas
                                                     </a>
@@ -5218,22 +5219,22 @@ STAY INFORMED EMAIL
 
                                                 <div class="space-y-3">
 
-                                                    <a href="14-jurisdiction-index.html"
+                                                    <a href="/14-jurisdiction-index"
                                                         class="block text-[#C9C5E8] hover:text-white">
                                                         Canada
                                                     </a>
 
-                                                    <a href="14-jurisdiction-index.html"
+                                                    <a href="/14-jurisdiction-index"
                                                         class="block text-[#C9C5E8] hover:text-white">
                                                         United Kingdom
                                                     </a>
 
-                                                    <a href="14-jurisdiction-index.html"
+                                                    <a href="/14-jurisdiction-index"
                                                         class="block text-[#C9C5E8] hover:text-white">
                                                         Australia
                                                     </a>
 
-                                                    <a href="14-jurisdiction-index.html"
+                                                    <a href="/14-jurisdiction-index"
                                                         class="block text-[#C9C5E8] hover:text-white">
                                                         Europe
                                                     </a>
@@ -5268,17 +5269,17 @@ STAY INFORMED EMAIL
 
                                     <div class="rounded-2xl bg-[#131029] border border-[#272245] p-3">
 
-                                        <a href="26-tool-fee-calculator.html"
+                                        <a href="/26-tool-fee-calculator"
                                             class="block p-4 rounded-xl hover:bg-primary/10 text-white">
                                             Odds Calculator
                                         </a>
 
-                                        <a href="26-tool-fee-calculator.html"
+                                        <a href="/26-tool-fee-calculator"
                                             class="block p-4 rounded-xl hover:bg-primary/10 text-white">
                                             Probability Calculator
                                         </a>
 
-                                        <a href="25-tools-index.html"
+                                        <a href="/25-tools-index"
                                             class="block p-4 rounded-xl hover:bg-primary/10 text-white">
                                             Prediction Tracker
                                         </a>
@@ -5307,21 +5308,21 @@ STAY INFORMED EMAIL
 
                                     <div class="rounded-2xl bg-[#131029] border border-[#272245] p-3">
 
-                                        <a href="34-guide-beginners.html"
+                                        <a href="/34-guide-beginners"
                                             class="block p-4 rounded-xl hover:bg-primary/10">
                                             <h4 class="text-white font-semibold">
                                                 Beginner Guide
                                             </h4>
                                         </a>
 
-                                        <a href="43-prediction-markets-pillar.html"
+                                        <a href="/43-prediction-markets-pillar"
                                             class="block p-4 rounded-xl hover:bg-primary/10">
                                             <h4 class="text-white font-semibold">
                                                 How Prediction Markets Work
                                             </h4>
                                         </a>
 
-                                        <a href="33-guides-index.html" class="block p-4 rounded-xl hover:bg-primary/10">
+                                        <a href="/33-guides-index" class="block p-4 rounded-xl hover:bg-primary/10">
                                             <h4 class="text-white font-semibold">
                                                 FAQs
                                             </h4>
@@ -5354,7 +5355,7 @@ STAY INFORMED EMAIL
 
                         <!-- CTA -->
 
-                        <a href="24-platform-finder.html"
+                        <a href="/24-platform-finder"
                             class="h-10 px-9 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-semibold flex items-center justify-center shadow-lg shadow-primary/25 hover:scale-105 transition duration-300">
 
                             Sign in
@@ -5471,17 +5472,17 @@ STAY INFORMED EMAIL
 
                         <div class="pl-6 py-3 space-y-3">
 
-                            <a href="/markets.php" class="block text-[#B8B4D9] hover:text-primary">All live markets</a>
+                            <a href="/markets" class="block text-[#B8B4D9] hover:text-primary">All live markets</a>
 
-                            <a href="/markets.php?category=politics" class="block text-[#B8B4D9] hover:text-primary">
+                            <a href="/markets/politics" class="block text-[#B8B4D9] hover:text-primary">
                                 Political Markets
                             </a>
 
-                            <a href="/markets.php?category=sports" class="block text-[#B8B4D9] hover:text-primary">
+                            <a href="/markets/sports" class="block text-[#B8B4D9] hover:text-primary">
                                 Sports Markets
                             </a>
 
-                            <a href="/markets.php?category=crypto" class="block text-[#B8B4D9] hover:text-primary">
+                            <a href="/markets/crypto" class="block text-[#B8B4D9] hover:text-primary">
                                 Crypto Markets
                             </a>
 
@@ -5508,11 +5509,11 @@ STAY INFORMED EMAIL
 
                         <div class="pl-6 py-3 space-y-3">
 
-                            <a href="02-platform-review-kalshi.html" class="block text-[#B8B4D9]">
+                            <a href="/02-platform-review-kalshi" class="block text-[#B8B4D9]">
                                 Kalshi
                             </a>
 
-                            <a href="01-platforms-index.html" class="block text-[#B8B4D9]">
+                            <a href="/01-platforms-index" class="block text-[#B8B4D9]">
                                 Polymarket
                             </a>
 
@@ -5528,7 +5529,7 @@ STAY INFORMED EMAIL
 
                 <!-- Compare -->
 
-                <a href="07-comparison-index.html"
+                <a href="/07-comparison-index"
                     class="flex items-center h-14 px-4 rounded-xl text-white hover:bg-[#161233]">
 
                     Compare
@@ -5552,19 +5553,19 @@ STAY INFORMED EMAIL
 
                         <div class="pl-6 py-3 space-y-3">
 
-                            <a href="18-jurisdiction-new-york.html" class="block text-[#B8B4D9]">
+                            <a href="/18-jurisdiction-new-york" class="block text-[#B8B4D9]">
                                 New York
                             </a>
 
-                            <a href="14-jurisdiction-index.html" class="block text-[#B8B4D9]">
+                            <a href="/14-jurisdiction-index" class="block text-[#B8B4D9]">
                                 California
                             </a>
 
-                            <a href="14-jurisdiction-index.html" class="block text-[#B8B4D9]">
+                            <a href="/14-jurisdiction-index" class="block text-[#B8B4D9]">
                                 Florida
                             </a>
 
-                            <a href="14-jurisdiction-index.html" class="block text-[#B8B4D9]">
+                            <a href="/14-jurisdiction-index" class="block text-[#B8B4D9]">
                                 Texas
                             </a>
 
@@ -5591,11 +5592,11 @@ STAY INFORMED EMAIL
 
                         <div class="pl-6 py-3 space-y-3">
 
-                            <a href="26-tool-fee-calculator.html" class="block text-[#B8B4D9]">
+                            <a href="/26-tool-fee-calculator" class="block text-[#B8B4D9]">
                                 Odds Calculator
                             </a>
 
-                            <a href="26-tool-fee-calculator.html" class="block text-[#B8B4D9]">
+                            <a href="/26-tool-fee-calculator" class="block text-[#B8B4D9]">
                                 Probability Calculator
                             </a>
 
@@ -5626,15 +5627,15 @@ STAY INFORMED EMAIL
 
                         <div class="pl-6 py-3 space-y-3">
 
-                            <a href="34-guide-beginners.html" class="block text-[#B8B4D9]">
+                            <a href="/34-guide-beginners" class="block text-[#B8B4D9]">
                                 Beginner Guide
                             </a>
 
-                            <a href="43-prediction-markets-pillar.html" class="block text-[#B8B4D9]">
+                            <a href="/43-prediction-markets-pillar" class="block text-[#B8B4D9]">
                                 How It Works
                             </a>
 
-                            <a href="33-guides-index.html" class="block text-[#B8B4D9]">
+                            <a href="/33-guides-index" class="block text-[#B8B4D9]">
                                 FAQs
                             </a>
 
@@ -5652,7 +5653,7 @@ STAY INFORMED EMAIL
 
         <div class="border-t border-[#252042] p-6 space-y-5">
 
-            <a href="24-platform-finder.html"
+            <a href="/24-platform-finder"
                 class="h-14 rounded-xl bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white font-semibold">
 
                 Explore

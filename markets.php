@@ -14,13 +14,13 @@ $pageTitle = ($catLabel ? "$catLabel Prediction Markets & Odds" : ($tabLabel ? "
     . ' | Smart Prediction Hub';
 $pageDescription = 'Compare live odds, volume and liquidity' . ($catLabel ? ' for ' . strtolower($catLabel) . ' markets' : '')
     . ' across Polymarket, Kalshi, Limitless and PredictIt. See where prediction markets agree — updated every few minutes.';
-$canonical = 'https://smartpredictionhub.com/markets.php' . ($catLabel ? '?category=' . rawurlencode($cat) : '');
+$canonical = 'https://smartpredictionhub.com/markets' . ($catLabel ? '/' . rawurlencode($cat) : '');
 
 require __DIR__ . '/includes/layout-top.php';
 ?>
 <section class="mk-hero">
     <div class="mk-wrap">
-        <div class="mk-crumbs"><a href="/">Home</a> / <a href="/markets.php">Markets</a><?= $catLabel ? ' / ' . htmlspecialchars($catLabel) : '' ?></div>
+        <div class="mk-crumbs"><a href="/">Home</a> / <a href="/markets">Markets</a><?= $catLabel ? ' / ' . htmlspecialchars($catLabel) : '' ?></div>
         <h1><?= htmlspecialchars($heading) ?> <span>across every platform</span></h1>
         <p>See what prediction markets are pricing and why. Compare odds, liquidity and price moves across Polymarket, Kalshi,
             Limitless and PredictIt — normalized in one place, with a volume-weighted consensus and the best price for every outcome.</p>

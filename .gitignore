@@ -7,3 +7,4 @@ app/sessions/*
 .DS_Store
 cache/
 app/cache/
+__pycache__/

@@ -1,3 +1,4 @@
+<?php if (!defined('SPH_APP')) { http_response_code(404); exit; } ?>
 <?php /* Shared page bottom, generated from index.html by deploy/build-layout.py. */ ?>
     <footer class="foot">
         <div class="wrap">
@@ -23,25 +24,25 @@
 </div>
                 </div>
                 <div>
-                    <h4>QUICK LINKS</h4><a href="/markets.php">Markets</a><a
-                        href="/platform.html">Platforms</a><a href="/coming-soon.html">Compare
-                        Platforms</a><a href="/coming-soon.html">Legal by Location</a><a
-                        href="/coming-soon.html">Platform Finder</a>
+                    <h4>QUICK LINKS</h4><a href="/markets">Markets</a><a
+                        href="/platform">Platforms</a><a href="/coming-soon">Compare
+                        Platforms</a><a href="/coming-soon">Legal by Location</a><a
+                        href="/coming-soon">Platform Finder</a>
                 </div>
                 <div>
                     <h4>POPULAR MARKETS</h4>
-                    <div class="foot-tags"><a href="/markets.php?category=politics">Politics</a><a href="/markets.php?category=sports">Sports</a><a
-                            href="/markets.php?category=crypto">Bitcoin</a><a href="/markets.php?category=economics">Economy</a><a
-                            href="/markets.php?category=tech">Technology</a><a href="/markets.php?category=politics">World Events</a></div>
+                    <div class="foot-tags"><a href="/markets/politics">Politics</a><a href="/markets/sports">Sports</a><a
+                            href="/markets/crypto">Bitcoin</a><a href="/markets/economics">Economy</a><a
+                            href="/markets/tech">Technology</a><a href="/markets/politics">World Events</a></div>
                 </div>
                 <div>
-                    <h4>TOOLS</h4><a href="/coming-soon.html">Platform Finder</a><a
-                        href="/coming-soon.html">Fee Calculator</a><a
-                        href="/markets.php?sort=volume24">Volume Dashboard</a>
+                    <h4>TOOLS</h4><a href="/coming-soon">Platform Finder</a><a
+                        href="/coming-soon">Fee Calculator</a><a
+                        href="/markets?sort=volume24">Volume Dashboard</a>
                 </div>
                 <div>
-                    <h4>RESEARCH STANDARDS</h4><a href="/coming-soon.html">Methodology</a><a
-                        href="/coming-soon.html">Editorial Policy</a><a href="/coming-soon.html">About SPH</a>
+                    <h4>RESEARCH STANDARDS</h4><a href="/coming-soon">Methodology</a><a
+                        href="/coming-soon">Editorial Policy</a><a href="/coming-soon">About SPH</a>
                 </div>
             </div>
             <div class="foot-bottom"><span>Smart Prediction Hub · Design preview</span><span>Event contracts carry risk.

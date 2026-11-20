@@ -187,9 +187,9 @@ function auth_page_end(): void
     <div class="simple-footer-inner">
         <span>© <?= date('Y') ?> <?= e(SITE_NAME) ?></span>
         <div class="simple-footer-links">
-            <a href="/coming-soon.html">Privacy</a>
-            <a href="/coming-soon.html">Terms</a>
-            <a href="/coming-soon.html">Contact</a>
+            <a href="/coming-soon">Privacy</a>
+            <a href="/coming-soon">Terms</a>
+            <a href="/coming-soon">Contact</a>
         </div>
     </div>
 </footer>

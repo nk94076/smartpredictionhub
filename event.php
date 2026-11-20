@@ -20,14 +20,14 @@ $pageTitle = $title . ' — Odds & Probability | Smart Prediction Hub';
 $pageDescription = $event
     ? $event['summary'] . '. Compare prices on ' . implode(', ', array_map(fn($p) => MK_PLATFORMS[$p][0], array_keys($event['platforms']))) . '.'
     : 'This prediction market could not be found.';
-$canonical = $event ? 'https://smartpredictionhub.com/event.php?id=' . rawurlencode($id) : '';
+$canonical = $event ? 'https://smartpredictionhub.com/event/' . rawurlencode($id) : '';
 
 require __DIR__ . '/includes/layout-top.php';
 ?>
 <section class="mk-hero">
     <div class="mk-wrap">
-        <div class="mk-crumbs"><a href="/">Home</a> / <a href="/markets.php">Markets</a>
-            <?php if ($event): ?> / <a href="/markets.php?category=<?= $h($event['category']) ?>"><?= $h(MK_CATEGORIES[$event['category']] ?? 'Other') ?></a><?php endif; ?></div>
+        <div class="mk-crumbs"><a href="/">Home</a> / <a href="/markets">Markets</a>
+            <?php if ($event): ?> / <a href="/markets/<?= $h($event['category']) ?>"><?= $h(MK_CATEGORIES[$event['category']] ?? 'Other') ?></a><?php endif; ?></div>
         <div class="mk-ev-head">
             <div>
                 <h1><?= $h($title) ?></h1>
@@ -56,10 +56,10 @@ require __DIR__ . '/includes/layout-top.php';
                 </aside>
             </div>
             <p class="mk-disclaimer">Prices are probabilities implied by each platform's market and can change quickly. Event contracts carry risk and may not be
-                available where you live — check <a href="/coming-soon.html" style="color:#4F46E5">legality by location</a> first. This is not trading advice.</p>
+                available where you live — check <a href="/coming-soon" style="color:#4F46E5">legality by location</a> first. This is not trading advice.</p>
         </div>
         <?php else: ?>
-        <div class="mk-empty">We couldn't find this event. <a href="/markets.php" style="color:#4F46E5;font-weight:600">Browse all live markets →</a></div>
+        <div class="mk-empty">We couldn't find this event. <a href="/markets" style="color:#4F46E5;font-weight:600">Browse all live markets →</a></div>
         <?php endif; ?>
     </div>
 </main>

@@ -108,14 +108,14 @@ auth_page_start('Create Account', 'Create your Smart Prediction Hub account.', [
                             <button type="button" class="password-toggle" data-target="confirmPassword" aria-label="Show password"><i class="fa-regular fa-eye"></i></button></div>
                     </div>
                 </div>
-                <label class="check-row" style="margin-bottom:12px"><input type="checkbox" id="termsCheck" name="terms" value="1" required <?= $v['terms'] ? 'checked' : '' ?>><span>I agree to the <a href="/coming-soon.html">Terms</a> and <a href="/coming-soon.html">Privacy Policy</a>.</span></label>
+                <label class="check-row" style="margin-bottom:12px"><input type="checkbox" id="termsCheck" name="terms" value="1" required <?= $v['terms'] ? 'checked' : '' ?>><span>I agree to the <a href="/coming-soon">Terms</a> and <a href="/coming-soon">Privacy Policy</a>.</span></label>
                 <label class="check-row" style="margin-bottom:20px"><input type="checkbox" name="updates" value="1" <?= $v['updates'] ? 'checked' : '' ?>><span>Send me occasional platform and market research updates.</span></label>
                 <button class="auth-submit" type="submit">Create account <i class="fa-solid fa-arrow-right"></i></button>
             </form>
 
             <div class="auth-divider"><span>OR SIGN UP WITH</span></div>
             <div class="social-auth">
-                <a href="/coming-soon.html"><i class="fa-brands fa-google"></i> Google</a>
+                <a href="/coming-soon"><i class="fa-brands fa-google"></i> Google</a>
             </div>
             <div class="form-note">Already have an account? <a href="login.php">Sign in</a>.</div>
         </div>
