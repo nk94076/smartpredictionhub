@@ -4868,6 +4868,7 @@ STAY INFORMED EMAIL
 
 }
     </style>
+    <link rel="stylesheet" href="/assets/markets.css">
 </head>
 <body>
 
@@ -4891,57 +4892,7 @@ STAY INFORMED EMAIL
                         </span>
                     </div>
 
-                    <!-- Item -->
-                    <div class="flex items-center gap-2 shrink-0">
-                        <div class="w-7 h-7 rounded-full bg-emerald-500/15 flex items-center justify-center">
-                            <i class="fa-solid fa-chart-column text-emerald-400 text-xs"></i>
-                        </div>
-
-                        <span class="text-gray-100 text-[15px]">
-                            Politics
-                            <span class="text-emerald-400 font-semibold">
-                                +18%
-                            </span>
-                            <i class="fa-solid fa-arrow-trend-up text-emerald-400 text-xs ml-1"></i>
-                        </span>
-                    </div>
-
-                    <!-- Item -->
-                    <div class="flex items-center gap-2 shrink-0">
-                        <div class="w-7 h-7 rounded-full bg-emerald-500/15 flex items-center justify-center">
-                            <i class="fa-solid fa-futbol text-emerald-400 text-xs"></i>
-                        </div>
-
-                        <span class="text-gray-100 text-[15px]">
-                            Sports
-                            <span class="text-emerald-400 font-semibold">
-                                +9%
-                            </span>
-                            <i class="fa-solid fa-arrow-trend-up text-emerald-400 text-xs ml-1"></i>
-                        </span>
-                    </div>
-
-                    <!-- Item -->
-                    <div class="flex items-center gap-2 shrink-0">
-                        <div class="w-7 h-7 rounded-full bg-amber-500/15 flex items-center justify-center">
-                            <i class="fa-solid fa-star text-amber-400 text-xs"></i>
-                        </div>
-
-                        <span class="text-gray-100 text-[15px]">
-                            Kalshi leads US volume
-                        </span>
-                    </div>
-
-                    <!-- Item -->
-                    <div class="flex items-center gap-2 shrink-0">
-                        <div class="w-7 h-7 rounded-full bg-emerald-500/15 flex items-center justify-center">
-                            <i class="fa-brands fa-bitcoin text-emerald-400 text-xs"></i>
-                        </div>
-
-                        <span class="text-gray-100 text-[15px]">
-                            Crypto markets gaining
-                        </span>
-                    </div>
+                    <div id="mk-ticker" class="mk-ticker"><span>Loading live market data…</span></div>
 
                 </div>
 
@@ -4950,9 +4901,7 @@ STAY INFORMED EMAIL
 
                     <div class="text-gray-300 text-[15px]">
                         Data updated
-                        <span class="font-semibold text-white">
-                            8 min ago
-                        </span>
+                        <span class="font-semibold text-white"><span id="mk-updated">–</span></span>
                     </div>
 
                     <button class="flex items-center gap-2 text-[15px] hover:text-primary transition">
@@ -4989,7 +4938,7 @@ STAY INFORMED EMAIL
                     <!-- LOGO -->
                     <!-- ========================= -->
 
-                    <a href="home.html" class="sph-wordmark-logo flex items-center gap-4 shrink-0"
+                    <a href="/" class="sph-wordmark-logo flex items-center gap-4 shrink-0"
                         aria-label="Smart Prediction Hub home">
 
                         <!-- Logo Icon -->
@@ -5035,7 +4984,16 @@ STAY INFORMED EMAIL
 
                                     <div class="rounded-2xl bg-[#131029] border border-[#272245] shadow-2xl p-3">
 
-                                        <a href="category.html"
+                                        <a href="/markets.php"
+                                            class="flex items-start gap-4 p-4 rounded-xl hover:bg-primary/10 transition">
+                                            <i class="fa-solid fa-bolt text-accent text-xl mt-1"></i>
+                                            <div>
+                                                <h4 class="text-white font-semibold">All live markets</h4>
+                                                <p class="text-[#9A94BE] text-sm">Odds compared across every platform</p>
+                                            </div>
+                                        </a>
+
+                                        <a href="/markets.php?category=politics"
                                             class="flex items-start gap-4 p-4 rounded-xl hover:bg-primary/10 transition">
 
                                             <i class="fa-solid fa-chart-line text-primary text-xl mt-1"></i>
@@ -5054,7 +5012,7 @@ STAY INFORMED EMAIL
 
                                         </a>
 
-                                        <a href="category.html"
+                                        <a href="/markets.php?category=sports"
                                             class="flex items-start gap-4 p-4 rounded-xl hover:bg-primary/10 transition">
 
                                             <i class="fa-solid fa-futbol text-success text-xl mt-1"></i>
@@ -5073,7 +5031,7 @@ STAY INFORMED EMAIL
 
                                         </a>
 
-                                        <a href="category.html"
+                                        <a href="/markets.php?category=crypto"
                                             class="flex items-start gap-4 p-4 rounded-xl hover:bg-primary/10 transition">
 
                                             <i class="fa-brands fa-bitcoin text-accent text-xl mt-1"></i>
@@ -5510,15 +5468,17 @@ STAY INFORMED EMAIL
 
                         <div class="pl-6 py-3 space-y-3">
 
-                            <a href="category.html" class="block text-[#B8B4D9] hover:text-primary">
+                            <a href="/markets.php" class="block text-[#B8B4D9] hover:text-primary">All live markets</a>
+
+                            <a href="/markets.php?category=politics" class="block text-[#B8B4D9] hover:text-primary">
                                 Political Markets
                             </a>
 
-                            <a href="category.html" class="block text-[#B8B4D9] hover:text-primary">
+                            <a href="/markets.php?category=sports" class="block text-[#B8B4D9] hover:text-primary">
                                 Sports Markets
                             </a>
 
-                            <a href="category.html" class="block text-[#B8B4D9] hover:text-primary">
+                            <a href="/markets.php?category=crypto" class="block text-[#B8B4D9] hover:text-primary">
                                 Crypto Markets
                             </a>
 
@@ -6329,42 +6289,11 @@ STAY INFORMED EMAIL
     <main class="sph-content content-wrap">
         <section class="content-section">
             <div class="content-heading">
-                <h2>Top Events</h2>
+                <h2>Live Prediction Markets</h2>
+                <a href="/markets.php" class="text-primary font-semibold text-sm">View all events →</a>
             </div>
-            <div class="event-table">
-                <div class="event-toolbar">
-                    <span class="flex gap-2 items-center text-emerald-700 font-semibold">
-                        <span class="relative flex h-3.5 w-3.5 items-center justify-center" aria-hidden="true">
-                            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/40 blur-[2px]"></span>
-                            <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_7px_#10b981,0_0_15px_rgba(16,185,129,0.7)]"></span>
-                        </span>
-                        <span id="event-status" role="status" aria-live="polite" class="text-[#0F172A]">Live Market Pulse</span>
-                    </span>
-                    <a href="https://smartpredictionhub.com/27-tool-volume-dashboard.html"
-                        class="inline-flex items-center text-primary font-semibold text-xs hover:gap-2 transition-all">
-                        Explore Events →
-                    </a>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="event-logo-head">Logo</th>
-                            <th>Event / market question</th>
-                            <th>Yes price</th>
-                            <th>No price</th>
-                            <th>24H volume</th>
-                            <th>Liquidity</th>
-                        </tr>
-                    </thead>
-                    <tbody id="event-rows">
-                        <tr>
-                            <td colspan="6">Loading…</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="event-note">Polymarket markets ordered by reported 24-hour volume. Prices are not guaranteed
-                    outcomes. <span id="event-updated">No successful refresh yet.</span></div>
-            </div>
+            <!-- Filled by assets/markets.js from /api/markets.php -->
+            <div id="mk-home" class="mk-home"></div>
         </section>
         <section class="content-section comparison-section">
             <div class="content-heading">
@@ -6902,21 +6831,21 @@ STAY INFORMED EMAIL
 </div>
                 </div>
                 <div>
-                    <h4>QUICK LINKS</h4><a href="/coming-soon.html">Markets</a><a
+                    <h4>QUICK LINKS</h4><a href="/markets.php">Markets</a><a
                         href="/platform.html">Platforms</a><a href="/coming-soon.html">Compare
                         Platforms</a><a href="/coming-soon.html">Legal by Location</a><a
                         href="/coming-soon.html">Platform Finder</a>
                 </div>
                 <div>
                     <h4>POPULAR MARKETS</h4>
-                    <div class="foot-tags"><a href="/coming-soon.html">Politics</a><a href="/coming-soon.html">Sports</a><a
-                            href="/coming-soon.html">Bitcoin</a><a href="/coming-soon.html">Economy</a><a
-                            href="/coming-soon.html">Technology</a><a href="/coming-soon.html">World Events</a></div>
+                    <div class="foot-tags"><a href="/markets.php?category=politics">Politics</a><a href="/markets.php?category=sports">Sports</a><a
+                            href="/markets.php?category=crypto">Bitcoin</a><a href="/markets.php?category=economics">Economy</a><a
+                            href="/markets.php?category=tech">Technology</a><a href="/markets.php?category=politics">World Events</a></div>
                 </div>
                 <div>
                     <h4>TOOLS</h4><a href="/coming-soon.html">Platform Finder</a><a
                         href="/coming-soon.html">Fee Calculator</a><a
-                        href="/coming-soon.html">Volume Dashboard</a>
+                        href="/markets.php?sort=volume24">Volume Dashboard</a>
                 </div>
                 <div>
                     <h4>RESEARCH STANDARDS</h4><a href="/coming-soon.html">Methodology</a><a
@@ -6927,17 +6856,7 @@ STAY INFORMED EMAIL
                     Sample content is not trading guidance.</span><a href="#">Back to top ↑</a></div>
         </div>
     </footer>
-    <script>
-        const SPH_MARKETS_URL = 'https://gamma-api.polymarket.com/markets?active=true&closed=false&limit=10&order=volume24hr&ascending=false';
-        function sphNumber(v) { return v === null || v === undefined || v === '' ? null : (Number.isFinite(Number(v)) ? Number(v) : null) }
-        function sphArray(v) { try { const a = typeof v === 'string' ? JSON.parse(v) : v; return Array.isArray(a) ? a : [] } catch { return [] } }
-        function sphMarketRow(m) { const o = sphArray(m.outcomes), prices = sphArray(m.outcomePrices); const yesIdx = o.findIndex(x => String(x).toLowerCase() === 'yes'), noIdx = o.findIndex(x => String(x).toLowerCase() === 'no'); let yes = yesIdx < 0 ? null : sphNumber(prices[yesIdx]), no = noIdx < 0 ? null : sphNumber(prices[noIdx]); if (yes !== null && (yes < 0 || yes > 1)) yes = null; if (no !== null && (no < 0 || no > 1)) no = null; if (no === null && yes !== null) no = 1 - yes; return { title: String(m.question || 'Untitled market'), yes, no, volume: sphNumber(m.volume24hr), liquidity: sphNumber(m.liquidityNum ?? m.liquidity), logo: typeof (m.image || m.icon) === 'string' ? (m.image || m.icon) : '' } }
-        (() => {
-            const d = document; const rows = d.getElementById('event-rows'); if (!rows) return; const updated = d.getElementById('event-updated'); let controller = null;
-            function paint(items, sample = false) { rows.replaceChildren(); const money = v => v === null ? '—' : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', notation: 'compact', maximumFractionDigits: 1 }).format(v); items.forEach((m) => { const tr = d.createElement('tr'); const logoTd = d.createElement('td'); logoTd.className = 'event-logo-cell'; const holder = d.createElement('span'); holder.className = 'event-logo'; if (m.logo) { const img = d.createElement('img'); img.src = m.logo; img.alt = ''; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer'; img.onerror = () => { img.remove(); holder.classList.add('event-logo-empty') }; holder.append(img) } else { holder.classList.add('event-logo-empty') } logoTd.append(holder); tr.append(logoTd);[m.title, m.yes === null ? '—' : (m.yes * 100).toFixed(1) + '%', m.no === null ? '—' : (m.no * 100).toFixed(1) + '%', money(m.volume), money(m.liquidity)].forEach(v => { const td = d.createElement('td'); td.textContent = String(v); tr.append(td) }); rows.append(tr) }) }
-            async function refreshData() { controller?.abort(); controller = new AbortController(); const own = controller; const timer = setTimeout(() => own.abort(), 12000); try { const res = await fetch(SPH_MARKETS_URL, { signal: own.signal, credentials: 'omit' }); if (!res.ok) throw Error('HTTP ' + res.status); const payload = await res.json(); if (!Array.isArray(payload)) throw Error('Invalid response'); const items = payload.filter(x => x && x.active === true && x.closed === false && x.archived !== true).map(sphMarketRow).filter(x => x.volume !== null && x.volume >= 0).sort((a, b) => b.volume - a.volume).slice(0, 5); if (!items.length) throw Error('No active markets'); if (own !== controller) return; paint(items); updated.textContent = 'Retrieved ' + new Date().toLocaleString() + ' · Upstream prices may be delayed.' } catch (e) { if (own !== controller) return; rows.replaceChildren(); const tr = d.createElement('tr'), td = d.createElement('td'); td.colSpan = 6; td.textContent = 'Live market data is temporarily unavailable. Use “Explore Events” for more market data.'; tr.append(td); rows.append(tr); updated.textContent = 'No current API figures displayed.' } finally { clearTimeout(timer) } }
-            refreshData();
-        })();</script>
+    <script src="/assets/markets.js" defer></script>
         
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         

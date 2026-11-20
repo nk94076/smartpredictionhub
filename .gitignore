@@ -6,3 +6,4 @@ app/sessions/*
 *.zip
 .DS_Store
 cache/
+app/cache/
