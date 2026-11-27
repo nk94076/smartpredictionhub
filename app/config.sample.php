@@ -38,7 +38,7 @@ define('TRUST_CLOUDFLARE', false);
 define('GEO_LOOKUP_ENABLED', true);
 
 // Key required to run setup.php. DELETE setup.php after setup.
-define('SETUP_KEY', 'CHANGE_ME_RANDOM_KEY');
+define('SETUP_KEY', 'YTHcdN9PQS({qOHH');
 
 ini_set('display_errors', '0');
 ini_set('log_errors', '1');
