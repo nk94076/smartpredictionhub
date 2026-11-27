@@ -9,7 +9,7 @@ if (!defined('SPH_APP')) { http_response_code(403); exit('Forbidden'); }
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'smartpredictionhub');
 define('DB_USER', 'smartpredictionhub');
-define('DB_PASS', 'CHANGE_ME');
+define('DB_PASS', 'No0zuXQCnAJUxUf3F8y7');
 
 // ---------- Site ----------
 define('SITE_NAME', 'Smart Prediction Hub');
