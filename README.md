@@ -1,4 +1,11 @@
-# Smart Prediction Hub — Admin Panel & User Accounts
+# Smart Prediction Hub
+
+Prediction-market research site: live odds compared across Polymarket, Kalshi, Limitless and PredictIt
+(`/markets.php`, `/event.php`), platform reviews, guides, user accounts and an admin panel.
+
+**Deploying on the VPS: see [DEPLOY.md](DEPLOY.md).**
+
+## Admin Panel & User Accounts
 
 ## Folder structure (upload into public_html)
 ```

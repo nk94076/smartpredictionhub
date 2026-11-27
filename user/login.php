@@ -85,7 +85,7 @@ auth_page_start('Sign In', 'Sign in to your Smart Prediction Hub account.', ['la
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="loginPassword"><span>Password</span><a href="/coming-soon.html">Forgot password?</a></label>
+                    <label for="loginPassword"><span>Password</span><a href="/coming-soon">Forgot password?</a></label>
                     <div class="input-wrap"><i class="fa-solid fa-lock"></i>
                         <input id="loginPassword" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" maxlength="256" required <?= $email !== '' ? 'autofocus' : '' ?>>
                         <button type="button" class="password-toggle" data-target="loginPassword" aria-label="Show password"><i class="fa-regular fa-eye"></i></button>
@@ -97,7 +97,7 @@ auth_page_start('Sign In', 'Sign in to your Smart Prediction Hub account.', ['la
 
             <div class="auth-divider"><span>OR CONTINUE WITH</span></div>
             <div class="social-auth">
-                <a href="/coming-soon.html"><i class="fa-brands fa-google"></i> Google</a>
+                <a href="/coming-soon"><i class="fa-brands fa-google"></i> Google</a>
             </div>
             <div class="form-note">Don’t have an account? <a href="register.php">Create one here</a>.</div>
         </div>
